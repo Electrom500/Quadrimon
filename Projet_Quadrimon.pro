@@ -10,14 +10,26 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    reco_carte.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    reco_carte.h
+
+INCLUDEPATH +=$$(OPENCV_DIR)\..\..\include
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    reco_carte.ui
 
+LIBS += -L$$(OPENCV_DIR)\lib \
+        -lopencv_core455 \
+        -lopencv_highgui455 \
+        -lopencv_imgproc455 \
+        -lopencv_imgcodecs455 \
+        -lopencv_videoio455 \
+        -lopencv_features2d455
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
