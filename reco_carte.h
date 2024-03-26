@@ -13,11 +13,19 @@ class Reco_carte : public QDialog
     Q_OBJECT
 
 public:
-    explicit Reco_carte(QWidget *parent = nullptr);
+    explicit Reco_carte(int argc, char *argv[],QWidget *parent = 0);
     ~Reco_carte();
     cv::Mat captureMat;
-    int Capture();
+    void Capture();
+    void Start();
+    cv::VideoCapture capture;
+    void detectCard(int argc, char *argv[]);
+private:
 
+
+
+private slots:
+    void updateImage();
 private:
     Ui::Reco_carte *ui;
 };
