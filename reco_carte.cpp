@@ -15,15 +15,15 @@ const char* keys =
     "{ input1 | box.png          | Path to input image 1. }"
     "{ input2 | box_in_scene.png | Path to input image 2. }";
 
-void Reco_carte::detectCard(int argc, char *argv[])
+int Reco_carte::detectCard(string path)
 {
-    CommandLineParser parser( argc, argv, keys );
-    Mat img1 = imread("C:/Users/damie/Desktop/Cours/Telecom/FISE 2/Bibliotheques de dev multimedia/test_flann_matching/cylindrus.png", IMREAD_GRAYSCALE);
-    Mat img2 = imread( samples::findFile( parser.get<String>("input2") ), IMREAD_GRAYSCALE );
-    if ( img1.empty() || img2.empty() )
+    cout<<captureMat.empty()<<endl;
+    if (!captureMat.empty()){
+    Mat img1 = imread(path, IMREAD_GRAYSCALE);
+    Mat img2 = captureMat;
+    if ( img1.empty() )
     {
         cout << "Could not open or find the image!\n" << endl;
-        parser.printMessage();
     }
 
     //-- Step 1: Detect the keypoints using SIFT Detector, compute the descriptors
@@ -49,7 +49,11 @@ void Reco_carte::detectCard(int argc, char *argv[])
             good_matches.push_back(knn_matches[i][0]);
         }
     }
-    cout<<"Il y a : "<< good_matches.size()<< "good matches "<<endl;
+    //cout<<"Il y a : "<< good_matches.size()<< "good matches "<<endl;
+    return good_matches.size();
+    }
+    return 0;
+
 }
 
 
@@ -74,6 +78,10 @@ void Reco_carte::Capture()
         //imshow("test",frame);
 
 }
+void Reco_carte::testCartes(){
+    string path = "./quadrimon/cartes/codes/cylindrus.png";
+    detectCard(path);
+}
 
 void Reco_carte::updateImage()
 {
@@ -89,17 +97,21 @@ void Reco_carte::updateImage()
     ui->capture_label->setPixmap(pixmap);
 }
 
-Reco_carte::Reco_carte(int argc, char *argv[],QWidget *parent)
+Reco_carte::Reco_carte(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Reco_carte)
 {
     ui->setupUi(this);
     capture = VideoCapture(0);
-    detectCard(argc,argv);
+    //string path = "C:/Users/damie/Desktop/quadrimon/cartes/codes/cylindrus.png";
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateImage()));
-    timer->start(20); // Interval in milliseconds
+    timer->start(30); // Interval in milliseconds
+
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, SIGNAL(timeout()), this, SLOT(testCartes()));
+    timer2->start(200); // Interval in milliseconds
 }
 
 Reco_carte::~Reco_carte()
