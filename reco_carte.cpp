@@ -17,7 +17,6 @@ const char* keys =
 
 int Reco_carte::detectCard(string path)
 {
-    cout<<captureMat.empty()<<endl;
     if (!captureMat.empty()){
     Mat img1 = imread(path, IMREAD_GRAYSCALE);
     Mat img2 = captureMat;
@@ -79,8 +78,74 @@ void Reco_carte::Capture()
 
 }
 void Reco_carte::testCartes(){
-    string path = "./quadrimon/cartes/codes/cylindrus.png";
-    detectCard(path);
+    string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
+
+    int nb_max = 0;
+    int nb = detectCard(path_cyl)/1.5;
+    string carte_detect = "None";
+    if (nb > 20) {
+        carte_detect = "Cylindrus";
+        nb_max = nb;
+    }
+
+    string path_gizeh = "../quadrimon/cartes/codes/gizeh.png";
+    nb = detectCard(path_gizeh);
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Gizeh";
+        nb_max = nb;
+    }
+
+    string path_flamby = "../quadrimon/cartes/codes/flamby.png";
+    nb = detectCard(path_flamby)*3;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Flamby";
+        nb_max = nb;
+    }
+
+    string path_glace = "../quadrimon/cartes/codes/glace.png";
+    nb = detectCard(path_glace)/2;
+    cout<<nb<<endl;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Glace";
+        nb_max = nb;
+    }
+
+    string path_khone = "../quadrimon/cartes/codes/khone.png";
+    nb = detectCard(path_khone)/5;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Khone";
+        nb_max = nb;
+    }
+
+    string path_menu = "../quadrimon/cartes/codes/menu.png";
+    nb = detectCard(path_menu)/13;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Menu";
+        nb_max = nb;
+    }
+
+    string path_olaf = "../quadrimon/cartes/codes/olaf.png";
+    nb = detectCard(path_olaf)/3;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Olaf";
+        nb_max = nb;
+    }
+
+    string path_sala = "../quadrimon/cartes/codes/saladier.png";
+    nb = detectCard(path_sala)*2;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Saladier";
+        nb_max = nb;
+    }
+
+    string path_soleil = "../quadrimon/cartes/codes/soleil.png";
+    nb = detectCard(path_soleil)/3;
+    if (nb > 20 && nb>nb_max){
+        carte_detect = "Soleil";
+        nb_max = nb;
+    }
+
+    cout<<carte_detect<<endl;
 }
 
 void Reco_carte::updateImage()
