@@ -6,20 +6,89 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1183</width>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>69</x>
+      <y>19</y>
+      <width>1071</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0" rowspan="6">
+      <widget class="QLabel" name="J1_info_label">
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="text">
+        <string>INFO J1</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4" rowspan="6">
+      <widget class="QLabel" name="J2_info_label">
+       <property name="text">
+        <string>INFOS J2</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" colspan="2">
+      <widget class="QLabel" name="temps_label">
+       <property name="text">
+        <string>TEMPS ?</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2" rowspan="5" colspan="2">
+      <widget class="QLabel" name="Terrain_label">
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string>TERRAIN 3D</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="capture_button">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>590</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nouvelle carte !</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1183</width>
      <height>21</height>
     </rect>
    </property>

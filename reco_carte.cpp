@@ -10,11 +10,6 @@
 using namespace cv;
 using namespace std;
 
-const char* keys =
-    "{ help h |                  | Print help message. }"
-    "{ input1 | box.png          | Path to input image 1. }"
-    "{ input2 | box_in_scene.png | Path to input image 2. }";
-
 int Reco_carte::detectCard(string path)
 {
     if (!captureMat.empty()){
@@ -36,7 +31,7 @@ int Reco_carte::detectCard(string path)
     // Since SIFT is a floating-point descriptor NORM_L2 is used
     Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create(DescriptorMatcher::FLANNBASED);
     std::vector< std::vector<DMatch> > knn_matches;
-    matcher->knnMatch( descriptors1, descriptors2, knn_matches, 2 );
+    matcher->knnMatch( descriptors1, descriptors2, knn_matches,5);
 
     //-- Filter matches using the Lowe's ratio test
     const float ratio_thresh = 0.7f;
@@ -57,6 +52,7 @@ int Reco_carte::detectCard(string path)
 
 
 void Reco_carte::Capture()
+
 {
     if(!capture.isOpened())
     {
@@ -75,76 +71,140 @@ void Reco_carte::Capture()
 
         captureMat = frame;
         //imshow("test",frame);
+}
+void Reco_carte::charger_image(QString cheminImage) {
+    // Charge l'image et la redimentionne
+
+
+    QImage image(cheminImage);
+    //QSize tailleTest(100, 100); Test
+    QSize tailleLabel = ui->card_match_label->size();
+
+    image = image.scaled(tailleLabel, Qt::KeepAspectRatio); // Garder le ratio d'aspect
+
+    ui->card_match_label->setPixmap(QPixmap::fromImage(image));
+}
+
+void Reco_carte::actualiser_card_match_label(string carte_detect){
+    string path ="";
+    if (carte_detect == "Cylindrus"){ path = "../quadrimon/cartes/codes/cylindrus.png";}
+    else if (carte_detect == "Gizeh"){ path = "../quadrimon/cartes/codes/gizeh.png";}
+    else if (carte_detect == "Flamby"){ path = "../quadrimon/cartes/codes/flamby.png";}
+    else if (carte_detect == "Khone"){ path = "../quadrimon/cartes/codes/khone.png";}
+    else if (carte_detect == "Menu"){ path = "../quadrimon/cartes/codes/menu.png";}
+    else if (carte_detect == "Olaf"){ path = "../quadrimon/cartes/codes/olaf.png";}
+    else if (carte_detect == "Saladier"){ path = "../quadrimon/cartes/codes/saladier.png";}
+    else if (carte_detect == "Soleil"){ path = "../quadrimon/cartes/codes/soleil.png";}
+
+    if (path != ""){
+        QString Qpath=QString::fromStdString(path);
+        charger_image(Qpath);
+    } else {
+        // TODO ????
+    }
+
 
 }
+
 void Reco_carte::testCartes(){
-    string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
 
     int nb_max = 0;
+    bool stop = false;
+
+    string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;
+    cout<<nb<<endl;
     string carte_detect = "None";
     if (nb > 20) {
+        if(nb>50){stop=true;}
         carte_detect = "Cylindrus";
         nb_max = nb;
     }
 
+    if(!stop){
     string path_gizeh = "../quadrimon/cartes/codes/gizeh.png";
     nb = detectCard(path_gizeh);
-    if (nb > 20 && nb>nb_max){
-        carte_detect = "Gizeh";
-        nb_max = nb;
-    }
-
-    string path_flamby = "../quadrimon/cartes/codes/flamby.png";
-    nb = detectCard(path_flamby)*3;
-    if (nb > 20 && nb>nb_max){
-        carte_detect = "Flamby";
-        nb_max = nb;
-    }
-
-    string path_glace = "../quadrimon/cartes/codes/glace.png";
-    nb = detectCard(path_glace)/2;
     cout<<nb<<endl;
     if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
+        carte_detect = "Gizeh";
+        nb_max = nb;
+    }}
+
+    if(!stop){
+    string path_flamby = "../quadrimon/cartes/codes/flamby.png";
+    nb = detectCard(path_flamby)*3;
+    cout<<nb<<endl;
+    if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
+        carte_detect = "Flamby";
+        nb_max = nb;
+    }}
+
+    if(!stop){
+    string path_glace = "../quadrimon/cartes/codes/glace.png";
+    nb = detectCard(path_glace)/2.3;
+    cout<<nb<<endl;
+    if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
         carte_detect = "Glace";
         nb_max = nb;
-    }
+    };}
 
+    if(!stop){
     string path_khone = "../quadrimon/cartes/codes/khone.png";
     nb = detectCard(path_khone)/5;
+    cout<<nb<<endl;
     if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
         carte_detect = "Khone";
         nb_max = nb;
-    }
+    }}
 
+    if(!stop){
     string path_menu = "../quadrimon/cartes/codes/menu.png";
     nb = detectCard(path_menu)/13;
+    cout<<nb<<endl;
     if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
         carte_detect = "Menu";
         nb_max = nb;
-    }
+    }}
 
+    if(!stop){
     string path_olaf = "../quadrimon/cartes/codes/olaf.png";
     nb = detectCard(path_olaf)/3;
+    cout<<nb<<endl;
     if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
         carte_detect = "Olaf";
         nb_max = nb;
-    }
+    }}
 
+    if(!stop){
     string path_sala = "../quadrimon/cartes/codes/saladier.png";
     nb = detectCard(path_sala)*2;
+    cout<<nb<<endl;
     if (nb > 20 && nb>nb_max){
+        if(nb>50){stop=true;}
         carte_detect = "Saladier";
         nb_max = nb;
-    }
+    }}
 
-    string path_soleil = "../quadrimon/cartes/codes/soleil.png";
-    nb = detectCard(path_soleil)/3;
-    if (nb > 20 && nb>nb_max){
-        carte_detect = "Soleil";
-        nb_max = nb;
-    }
+    if(!stop){
+        string path_soleil = "../quadrimon/cartes/codes/soleil.png";
+        nb = detectCard(path_soleil)/3;
+        cout<<nb<<endl;
+        if (nb > 20 && nb>nb_max){
+            if(nb>50){stop=true;}
+            carte_detect = "Soleil";
+            nb_max = nb;
+        }}
 
+    QString card_match_txt=QString::fromStdString(carte_detect);
+    ui->nom_carte_label->setText(card_match_txt);
+    actualiser_card_match_label(carte_detect);
+    mw->Set_Carte_trouvee(carte_detect);
     cout<<carte_detect<<endl;
 }
 
@@ -156,27 +216,27 @@ void Reco_carte::updateImage()
     Mat resizedFrame;
     cv::resize(captureMat, resizedFrame, cv::Size(labelSize.width(), labelSize.height()));
 
-    QImage img(resizedFrame.data, resizedFrame.cols, resizedFrame.rows, resizedFrame.step, QImage::Format_RGB888);
+    QImage img(resizedFrame.data, resizedFrame.cols, resizedFrame.rows, resizedFrame.step, QImage::Format_BGR888);
     QPixmap pixmap = QPixmap::fromImage(img);
 
     ui->capture_label->setPixmap(pixmap);
 }
 
-Reco_carte::Reco_carte(QWidget *parent)
+Reco_carte::Reco_carte(MainWindow *mw_,QWidget *parent)
     : QDialog(parent)
+    , mw(mw_)
     , ui(new Ui::Reco_carte)
 {
     ui->setupUi(this);
     capture = VideoCapture(0);
-    //string path = "C:/Users/damie/Desktop/quadrimon/cartes/codes/cylindrus.png";
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateImage()));
     timer->start(30); // Interval in milliseconds
 
-    QTimer *timer2 = new QTimer(this);
-    connect(timer2, SIGNAL(timeout()), this, SLOT(testCartes()));
-    timer2->start(200); // Interval in milliseconds
+    //QTimer *timer2 = new QTimer(this);
+    //connect(timer2, SIGNAL(timeout()), this, SLOT(testCartes()));
+    //timer2->start(200); // Interval in milliseconds
 }
 
 Reco_carte::~Reco_carte()
@@ -184,6 +244,8 @@ Reco_carte::~Reco_carte()
     delete ui;
 }
 
-
-
+void Reco_carte::on_capture_button_clicked()
+{
+    testCartes();
+}
 
