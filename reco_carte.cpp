@@ -61,9 +61,9 @@ void Reco_carte::Capture()
 
     Mat frame;
 
-        capture >> frame; // get a new frame from camera
+        capture >> frame; //new frame from camera
 
-        // Check if the frame is empty
+        // check if the frame is empty
         if (frame.empty()) {
             cerr << "Error: Captured frame is empty" << endl;
 
@@ -85,6 +85,16 @@ void Reco_carte::charger_image(QString cheminImage) {
     ui->card_match_label->setPixmap(QPixmap::fromImage(image));
 }
 
+string Reco_carte::getLast_carte_detect() const
+{
+    return last_carte_detect;
+}
+
+void Reco_carte::setLast_carte_detect(const string &newLast_carte_detect)
+{
+    last_carte_detect = newLast_carte_detect;
+}
+
 void Reco_carte::actualiser_card_match_label(string carte_detect){
     string path ="";
     if (carte_detect == "Cylindrus"){ path = "../quadrimon/cartes/codes/cylindrus.png";}
@@ -95,6 +105,7 @@ void Reco_carte::actualiser_card_match_label(string carte_detect){
     else if (carte_detect == "Olaf"){ path = "../quadrimon/cartes/codes/olaf.png";}
     else if (carte_detect == "Saladier"){ path = "../quadrimon/cartes/codes/saladier.png";}
     else if (carte_detect == "Soleil"){ path = "../quadrimon/cartes/codes/soleil.png";}
+    else if (carte_detect == "Glace"){ path = "../quadrimon/cartes/codes/glace.png";}
 
     if (path != ""){
         QString Qpath=QString::fromStdString(path);
@@ -204,7 +215,7 @@ void Reco_carte::testCartes(){
     QString card_match_txt=QString::fromStdString(carte_detect);
     ui->nom_carte_label->setText(card_match_txt);
     actualiser_card_match_label(carte_detect);
-    mw->Set_Carte_trouvee(carte_detect);
+    setLast_carte_detect(carte_detect);
     cout<<carte_detect<<endl;
 }
 
@@ -247,5 +258,13 @@ Reco_carte::~Reco_carte()
 void Reco_carte::on_capture_button_clicked()
 {
     testCartes();
+}
+
+
+void Reco_carte::on_valid_button_clicked()
+{
+    mw->Set_Carte_trouvee(getLast_carte_detect());
+    mw->reco_close();
+    close();
 }
 

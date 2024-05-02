@@ -51,9 +51,15 @@
       </widget>
      </item>
      <item row="0" column="2" colspan="2">
-      <widget class="QLabel" name="temps_label">
+      <widget class="QLabel" name="Instruction_label">
        <property name="text">
-        <string>TEMPS ?</string>
+        <string>Le Joueur tiré au sort pour commencer est : Joueur X</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -79,7 +85,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Nouvelle carte !</string>
+     <string>Enregistrer le premier Quadrimon de Joueur X</string>
     </property>
    </widget>
   </widget>

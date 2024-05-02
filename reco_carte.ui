@@ -50,7 +50,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>CARTE</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -63,7 +63,7 @@
     <item row="1" column="2">
      <widget class="QLabel" name="nom_carte_label">
       <property name="text">
-       <string>TXT_Carte_TROUVE</string>
+       <string>None</string>
       </property>
      </widget>
     </item>
@@ -100,6 +100,19 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="valid_button">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>610</y>
+     <width>171</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Valider</string>
    </property>
   </widget>
  </widget>

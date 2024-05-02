@@ -25,16 +25,22 @@ public:
     cv::VideoCapture capture;
     int detectCard(string path);
 
+    string getLast_carte_detect() const;
+    void setLast_carte_detect(const string &newLast_carte_detect);
+
 private:
     MainWindow *mw;
     void actualiser_card_match_label(string path);
     void charger_image(QString cheminImage);
+    string last_carte_detect = "None";
 
 
 private slots:
     void updateImage();
     void testCartes();
     void on_capture_button_clicked();
+
+    void on_valid_button_clicked();
 
 private:
     Ui::Reco_carte *ui;
