@@ -9,16 +9,21 @@ using namespace std;
 class joueur
 {
 public:
-    joueur(quadrimon q1,quadrimon q2,int _indexQuadActif,terrain _terrainActif);
+    joueur();
     int getIndexQuadActif() const;
     void setIndexQuadActif(int newIndexQuadActif);
 
     terrain getTerrainActif() const;
     void setTerrainActif(const terrain &newTerrainActif);
 
+    void addQuad1(quadrimon q);
+    void addQuad2(quadrimon q);
+
 private:
-    array<quadrimon,2> lst_quadrimons;
-    int indexQuadActif;
+    quadrimon q1;
+    quadrimon q2;
+
+    int indexQuadActif; // 1 ou 2
     terrain terrainActif;
 };
 

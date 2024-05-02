@@ -6,6 +6,7 @@ using namespace std;
 class terrain
 {
 public:
+    terrain();
     terrain(string _name,int _nb_tours,bool _permanant);
 
     string getName() const;

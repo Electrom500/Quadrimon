@@ -1,6 +1,8 @@
 #include "joueur.h"
 
-joueur::joueur(quadrimon q1, quadrimon q2, int _indexQuadActif, terrain _terrainActif) : lst_quadrimons({q1, q2}), indexQuadActif(_indexQuadActif), terrainActif(_terrainActif) {}
+joueur::joueur(){
+
+}
 
 int joueur::getIndexQuadActif() const
 {
@@ -22,3 +24,12 @@ void joueur::setTerrainActif(const terrain &newTerrainActif)
     terrainActif = newTerrainActif;
 }
 
+void joueur::addQuad1(quadrimon q)
+{
+    q1=q;
+}
+
+void joueur::addQuad2(quadrimon q)
+{
+    q2=q;
+}

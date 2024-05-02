@@ -1,6 +1,8 @@
 #include "terrain.h"
 
 
+terrain::terrain(){}
+
 terrain::terrain(string _name, int _nb_tours, bool _permanant)
 {
     name = _name;

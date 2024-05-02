@@ -239,15 +239,13 @@ Reco_carte::Reco_carte(MainWindow *mw_,QWidget *parent)
     , ui(new Ui::Reco_carte)
 {
     ui->setupUi(this);
+    //connect(this, &Reco_carte::destroyed, this, &Reco_carte::deleteLater);
     capture = VideoCapture(0);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateImage()));
-    timer->start(30); // Interval in milliseconds
+    timer->start(50); // Interval in milliseconds
 
-    //QTimer *timer2 = new QTimer(this);
-    //connect(timer2, SIGNAL(timeout()), this, SLOT(testCartes()));
-    //timer2->start(200); // Interval in milliseconds
 }
 
 Reco_carte::~Reco_carte()

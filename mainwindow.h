@@ -38,7 +38,9 @@ private:
     joueur* J2;
     int etatJeu = 0; // 1 = J1 , 2 = J2 , 0 = initial, 3 = fin de partie
     bool premierTour = true;
-    bool phaseIni = true;
+    int phaseIni = 1;
+    // 1 = 1er joueur - 1er quad, 2,...,4 = 2eme joueur - 2eme quad, 0= fini
+
     Ui::MainWindow *ui;
     void next_turn();
 

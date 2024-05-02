@@ -5,6 +5,7 @@ using namespace std;
 class quadrimon
 {
 public:
+    quadrimon();
     quadrimon(string _name);
     string getName() const;
     void setName(const string &newName);
@@ -20,7 +21,7 @@ public:
 
     bool getQuad_valid() const;
     void setQuad_valid(bool newQuad_valid);
-
+    string toString();
 private:
     string name;
     int type =0; // 1 = feu , 2 = vent , 3 = eau
