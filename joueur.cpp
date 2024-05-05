@@ -26,10 +26,20 @@ void joueur::setTerrainActif(const terrain &newTerrainActif)
 
 void joueur::addQuad1(quadrimon q)
 {
-    q1=q;
+    if (!q1add){
+        q1=q;
+        q1add=true;
+    } else {
+        cout<<q1.toString()<<endl;
+    }
 }
 
 void joueur::addQuad2(quadrimon q)
 {
-    q2=q;
+    if (!q2add){
+        q2=q;
+        q2add=true;
+    }else {
+        cout<<q2.toString()<<endl;
+    }
 }

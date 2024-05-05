@@ -19,7 +19,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
     void Set_Carte_trouvee(string Ct);
     void Actualiser_Info_J1();
     string Get_Carte_trouvee();
@@ -36,6 +35,7 @@ private slots:
 private:
     joueur* J1;
     joueur* J2;
+
     int etatJeu = 0; // 1 = J1 , 2 = J2 , 0 = initial, 3 = fin de partie
     bool premierTour = true;
     int phaseIni = 1;

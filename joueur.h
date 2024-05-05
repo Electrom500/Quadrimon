@@ -1,7 +1,6 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include <array>
 #include <iostream>
 #include "terrain.h"
 #include "quadrimon.h"
@@ -19,6 +18,8 @@ public:
     void addQuad1(quadrimon q);
     void addQuad2(quadrimon q);
 
+    bool q1add = false; // Sécurités suite a tests foireux
+    bool q2add = false; // Sécurités suite a tests foireux
 private:
     quadrimon q1;
     quadrimon q2;

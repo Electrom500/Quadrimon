@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-vector<string> allQuadrimon = {"Cylindrus", "Gizeh", "Flamby", "Khone","Menu","Olaf","Saladier","Soleil","Glace"};
+vector<string> allQuadrimon = {"Cylindrus", "Gizeh", "Flamby", "Khone","Menu","Olaf","Saladier","Soleil","Glace","None"};
 
 int trouverIndice(const vector<string>& liste, const string& recherche) {
     auto it = find(liste.begin(), liste.end(), recherche);
@@ -23,7 +23,7 @@ quadrimon::quadrimon(string _name)
     name = _name;
     int id = trouverIndice(allQuadrimon,name)+1;
     switch (id) {
-    case -1:
+    case 10:
         break;
 
     case 1: // Cylindrus

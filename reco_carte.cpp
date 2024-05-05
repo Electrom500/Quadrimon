@@ -221,6 +221,7 @@ void Reco_carte::testCartes(){
 
 void Reco_carte::updateImage()
 {
+    if(capture.isOpened()){
     Capture();
     QSize labelSize = ui->capture_label->size();
 
@@ -231,6 +232,7 @@ void Reco_carte::updateImage()
     QPixmap pixmap = QPixmap::fromImage(img);
 
     ui->capture_label->setPixmap(pixmap);
+    }
 }
 
 Reco_carte::Reco_carte(MainWindow *mw_,QWidget *parent)
@@ -263,6 +265,6 @@ void Reco_carte::on_valid_button_clicked()
 {
     mw->Set_Carte_trouvee(getLast_carte_detect());
     mw->reco_close();
+    capture.release();
     close();
 }
-
