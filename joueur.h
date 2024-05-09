@@ -1,7 +1,9 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include <iostream>
+
+#include <stack>
+
 #include "terrain.h"
 #include "quadrimon.h"
 using namespace std;
@@ -9,22 +11,29 @@ class joueur
 {
 public:
     joueur();
-    int getIndexQuadActif() const;
-    void setIndexQuadActif(int newIndexQuadActif);
+    bool getIndexQuadActif1() const;
+    void switchIndexQuadActif1();
 
     terrain getTerrainActif() const;
     void setTerrainActif(const terrain &newTerrainActif);
 
-    void addQuad1(quadrimon q);
-    void addQuad2(quadrimon q);
+    void addQuad1(quadrimon* q);
+    void addQuad2(quadrimon* q);
 
-    bool q1add = false; // Sécurités suite a tests foireux
-    bool q2add = false; // Sécurités suite a tests foireux
+    bool q1add = false; // Sécurités suite a des tests foireux
+    bool q2add = false; // Sécurités suite a des tests foireux
+
+    bool est_attaque(int degats);
+
 private:
-    quadrimon q1;
-    quadrimon q2;
+    bool ko = false;
+    bool q1_ko =false;
+    bool q2_ko =false;
 
-    int indexQuadActif; // 1 ou 2
+    quadrimon* q1;
+    quadrimon* q2;
+
+    bool indexQuadActif1 = true; // true = 1, false = 2
     terrain terrainActif;
 };
 

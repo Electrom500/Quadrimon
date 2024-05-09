@@ -160,6 +160,38 @@
      <string>Enregistrer le premier Quadrimon de Joueur X</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="interrup_J1_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>580</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Changement de terrain J1 !</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="interrup_J2_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>580</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Changement de terrain J2 !</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
