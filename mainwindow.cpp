@@ -229,14 +229,14 @@ void MainWindow::iniquad()
 void MainWindow::attaque()
 {
     if (etatJeu==1){
-        if(J2->est_attaque(J1->degats_a_infliger())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
+        if(J2->est_attaque(J1->degats_a_infliger(),J1->get_type_attaque())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
             set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
             set_capt_butt_txt(" Restart ");
             J1_gagne = true;
         }
     } else {
-        if(J1->est_attaque(J2->degats_a_infliger())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
+        if(J1->est_attaque(J2->degats_a_infliger(),J2->get_type_attaque())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
             set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
             set_capt_butt_txt(" Restart ");

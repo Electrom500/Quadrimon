@@ -20,7 +20,7 @@ public:
     void addQuad1(quadrimon* q1);
     void addQuad2(quadrimon* q2);
 
-    bool est_attaque(int degats);
+    bool est_attaque(int degats,int type);
     int degats_a_infliger();
 
     string get_q1_txt();
@@ -29,6 +29,7 @@ public:
     bool getQ1_ko() const;
     bool getQ2_ko() const;
 
+    int get_type_attaque();
 private:
     bool ko = false;
     bool q1_ko =false;
@@ -36,6 +37,8 @@ private:
 
     quadrimon* q1 = new quadrimon;
     quadrimon* q2 = new quadrimon;
+
+    bool attaque_boostee(int type_attaque);
 
     bool indexQuadActif1 = true; // true = 1, false = 2
     terrain terrainActif;
