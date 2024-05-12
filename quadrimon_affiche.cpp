@@ -283,6 +283,7 @@ void quadrimon_affiche::Display(const float time)
     GLfloat colorDiffuseTabfin[] = {0.0,0.0,0.0,1.0};
     glMaterialfv(GL_FRONT,GL_DIFFUSE,colorDiffuseTabfin);
     glMaterialfv(GL_FRONT,GL_AMBIENT,colorAmbianteTabfin);
+    glDisable(GL_LIGHTING);
 
 
 }

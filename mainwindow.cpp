@@ -295,6 +295,7 @@ void MainWindow::actualiser_affichage_txt()
     txt_temp=QString::fromStdString(J1->get_q2_txt());
     ui->J1_quad2_label->setText(txt_temp);
     ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
+    ui->openGLWidget->changeTerrJ1(J1->getTerrainActif().getName());
 
     // "Affichage" des quad de j2
     txt_temp=QString::fromStdString(J2->get_q1_txt());
@@ -302,6 +303,7 @@ void MainWindow::actualiser_affichage_txt()
     txt_temp=QString::fromStdString(J2->get_q2_txt());
     ui->J2_quad2_label->setText(txt_temp);
     ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
+    ui->openGLWidget->changeTerrJ2(J2->getTerrainActif().getName());
 
     if(J1->getIndexQuadActif1()){ //IDENTIFICATION DU QUADRIMON ACTIF DE J1
         ui->J1_quad1_label->setFrameShape(QFrame::Box);
