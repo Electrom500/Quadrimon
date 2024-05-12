@@ -15,7 +15,6 @@ int trouverIndice(const vector<string>& liste, const string& recherche) {
 
 quadrimon::quadrimon()
 {
-
 }
 
 quadrimon::quadrimon(string _name)
@@ -138,15 +137,13 @@ void quadrimon::setQuad_valid(bool newQuad_valid)
 
 string quadrimon::toString()
 {
-    string strType;
+    string strType = "";
     if (type==1){
         strType = "Eau";
     } else if (type==2){
         strType = "Feu";
     } else if (type==3){
         strType = "Vent";
-    } else {
-        strType = "";
     }
     string str = " Nom = " + name +
                  "\n Type = " + strType +

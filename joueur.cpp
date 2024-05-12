@@ -4,7 +4,7 @@ joueur::joueur(){
 
 }
 
-bool joueur::getIndexQuadActif1() const
+bool joueur::getIndexQuadActif1()
 {
     return indexQuadActif1;
 }
@@ -26,22 +26,12 @@ void joueur::setTerrainActif(const terrain &newTerrainActif)
 
 void joueur::addQuad1(quadrimon* q)
 {
-    if (!q1add){
-        q1=q;
-        q1add=true;
-    } else {
-        cout<<q1->toString()<<endl;
-    }
+    q1=q;
 }
 
 void joueur::addQuad2(quadrimon* q)
 {
-    if (!q2add){
-        q2=q;
-        q2add=true;
-    }else {
-        cout<<q2->toString()<<endl;
-    }
+    q2=q;
 }
 
 bool joueur::est_attaque(int degats) // Renvoie true si plus de quadrimon vivant, false sinon
@@ -67,4 +57,16 @@ int joueur::degats_a_infliger()
 {
     if (indexQuadActif1) return q1->getAttaque();
     return q2->getAttaque();
+}
+
+string joueur::get_q1_txt()
+{
+    //return std::to_string(reinterpret_cast<std::uintptr_t>(q1));
+    return q1->toString();
+}
+
+string joueur::get_q2_txt()
+{
+    //return std::to_string(reinterpret_cast<std::uintptr_t>(q2));
+    return q2->toString();
 }
