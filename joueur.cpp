@@ -70,3 +70,14 @@ string joueur::get_q2_txt()
     //return std::to_string(reinterpret_cast<std::uintptr_t>(q2));
     return q2->toString();
 }
+
+bool joueur::getQ1_ko() const
+{
+    return q1_ko;
+}
+
+bool joueur::getQ2_ko() const
+{
+    return q2_ko;
+}
+

@@ -27,24 +27,20 @@ MainWindow::~MainWindow()
 void MainWindow::on_capture_button_clicked()
 {
     if (etatJeu==3){ // PARTIE FIN DE PARTIE
-        //restart();
-        cout<<"ETAT 3";
+        restart();
     }else if (phaseIni<=4){ // PARTIE INITIALISATION DES QUADRIMONS
         Reco_carte *r = new Reco_carte(this);
         r->exec();
     } else { // TOURS CLASSIQUES
-        if (etatJeu==1){
 
-        }
-
-        if (!choix_quad_done){ // PARTIE CHANGEMEENT DE QUAD ACTIF
+        if (!choix_quad_done){ // PARTIE CHANGEMENT DE QUAD ACTIF
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Changement quadrimon", "Veux tu changer de quadrimon ?",QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
                 switch_quadri_actif();
-                actualiser_affichage_txt();
+                actualiser_affichage_txt(); // ACTUALISE LE CADRE DE SELECTION DE QUADRI
             }
-            choix_quad_done = !choix_quad_done;
+            choix_quad_done = true;
             set_inst_txt(" Joueur "+to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
             set_capt_butt_txt("Joueur "+to_string(getEtatJeu())+", à l'attaque ?");
 
@@ -52,13 +48,44 @@ void MainWindow::on_capture_button_clicked()
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Choix attaque", "Veux tu attaquer ?",QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
+                bool q_switch_ko;
+                if (etatJeu==1) {
+                    q_switch_ko = J1->getIndexQuadActif1();
+                } else {
+                    q_switch_ko = J2->getIndexQuadActif1();
+                }
                 attaque();
+                if (etatJeu==1) {
+                    if (q_switch_ko != J1->getIndexQuadActif1()){
+                        J1->switchIndexQuadActif1();
+                    }
+                } else {
+                    if (q_switch_ko != J2->getIndexQuadActif1()){
+                        J2->switchIndexQuadActif1();
+                    }
+                }
                 actualiser_affichage_txt();
             }
-            choix_quad_done = !choix_quad_done;
-            switch_tour_joueur();
-            set_inst_txt(" Joueur "+to_string(getEtatJeu())+ " c'est ton tour \n Veux tu changer de quadrimon ?");
-            set_capt_butt_txt("Changes tu de quadrimon  Joueur "+to_string(getEtatJeu())+" ?");
+            if (etatJeu!=3){
+                choix_quad_done = false;
+                switch_tour_joueur();
+                set_inst_txt(" Joueur "+to_string(getEtatJeu())+ " c'est ton tour \n Veux tu changer de quadrimon ?");
+                set_capt_butt_txt("Changes tu de quadrimon  Joueur "+to_string(getEtatJeu())+" ?");
+            }
+
+            if (etatJeu==1){
+                if (J1->getQ1_ko() || J1->getQ2_ko()){
+                    choix_quad_done = true;
+                    set_inst_txt(" Joueur "+to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
+                    set_capt_butt_txt("Joueur "+to_string(getEtatJeu())+", à l'attaque ?");
+                }
+            } else if (etatJeu==2) {
+                if (J2->getQ1_ko() || J2->getQ2_ko()){
+                    choix_quad_done = true;
+                    set_inst_txt(" Joueur "+to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
+                    set_capt_butt_txt("Joueur "+to_string(getEtatJeu())+", à l'attaque ?");
+                }
+            }
         }
     }
 }
@@ -97,9 +124,14 @@ void MainWindow::start(){
 
 void MainWindow::restart()
 {
+    delete J1;
+    delete J2;
+    J1 = new joueur;
+    J2 = new joueur;
     etatJeu = 0;
     phaseIni = 1;
     choix_quad_done = false;
+    actualiser_affichage_txt();
     start();
 }
 
@@ -199,14 +231,16 @@ void MainWindow::attaque()
     if (etatJeu==1){
         if(J2->est_attaque(J1->degats_a_infliger())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
-            set_inst_txt("J1 a gagné \n cliquez sur le bouton du bas pour relancer une partie");
-            // TODO FIN DE PARTIE AVEC J1 VAINQUEUR
+            set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+            set_capt_butt_txt(" Restart ");
+            J1_gagne = true;
         }
     } else {
         if(J1->est_attaque(J2->degats_a_infliger())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
-            set_inst_txt("J1 a gagné \n cliquez sur le bouton du bas pour relancer une partie");
-            // TODO FIN DE PARTIE AVEC J2 VAINQUEUR
+            set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+            set_capt_butt_txt(" Restart ");
+            J1_gagne = false;
         }
     }
     actualiser_affichage_txt();
@@ -214,25 +248,16 @@ void MainWindow::attaque()
 
 void MainWindow::reco_close()
 {
-    if (!(etatJeu==3)){
-        if (phaseIni<=4){ //PREMIER BLOCK pour la partie ou on scanne nos 2 quadrimons
-            iniquad();
-        }
-    } else {
-        set_inst_txt("Le jeu est fini");
-        set_capt_butt_txt("Recommancer une partie ? NOT IMPEMENTED YET");
+    if (phaseIni<=4){ //PREMIER BLOCK pour la partie ou on scanne nos 2 quadrimons
+        iniquad();
     }
 }
 
 void MainWindow::switch_quadri_actif(){
     if (etatJeu==1){
-        cout<<"etat actif J1 = "+to_string(J1->getIndexQuadActif1())<<endl;
         J1->switchIndexQuadActif1();
-        cout<<"etat actif J1 = "+to_string(J1->getIndexQuadActif1())<<endl;
     } else {
-        cout<<"etat actif J2 = "+to_string(J2->getIndexQuadActif1())<<endl;
         J2->switchIndexQuadActif1();
-        cout<<"etat actif J2 = "+to_string(J2->getIndexQuadActif1())<<endl;
     }
     actualiser_affichage_txt();
 }

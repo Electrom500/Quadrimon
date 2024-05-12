@@ -25,6 +25,10 @@ public:
 
     string get_q1_txt();
     string get_q2_txt();
+
+    bool getQ1_ko() const;
+    bool getQ2_ko() const;
+
 private:
     bool ko = false;
     bool q1_ko =false;

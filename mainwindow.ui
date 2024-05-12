@@ -43,7 +43,7 @@
           <number>1</number>
          </property>
          <property name="text">
-          <string>INFO QUAD1</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
@@ -75,7 +75,7 @@
           <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>INFO QUAD2</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
@@ -118,7 +118,7 @@
           <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>INFO QUAD1</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
@@ -134,7 +134,7 @@
           <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>INFO QUAD2</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
@@ -210,7 +210,7 @@
      <x>0</x>
      <y>0</y>
      <width>1183</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
