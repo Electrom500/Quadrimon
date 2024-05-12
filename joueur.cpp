@@ -9,6 +9,15 @@ bool joueur::getIndexQuadActif1()
     return indexQuadActif1;
 }
 
+std::string joueur::getNameQuadActif(){
+    if (indexQuadActif1){
+        return q1->getName();
+    }
+    else{
+        return q2->getName();
+    }
+}
+
 void joueur::switchIndexQuadActif1()
 {
     indexQuadActif1 = !indexQuadActif1 ;
@@ -68,15 +77,15 @@ int joueur::get_type_attaque(){
     }
     return q2->getType();
 }
-string joueur::get_q1_txt()
+std::string joueur::get_q1_txt()
 {
-    //return std::to_string(reinterpret_cast<std::uintptr_t>(q1));
+    //return std::__cxx11::to_string(reinterpret_cast<std::uintptr_t>(q1));
     return q1->toString();
 }
 
-string joueur::get_q2_txt()
+std::string joueur::get_q2_txt()
 {
-    //return std::to_string(reinterpret_cast<std::uintptr_t>(q2));
+    //return std::__cxx11::to_string(reinterpret_cast<std::uintptr_t>(q2));
     return q2->toString();
 }
 

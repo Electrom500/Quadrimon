@@ -1,14 +1,14 @@
 #ifndef QUADRIMON_H
 #define QUADRIMON_H
 #include "iostream"
-using namespace std;
+
 class quadrimon
 {
 public:
     quadrimon();
-    quadrimon(string _name);
-    string getName() const;
-    void setName(const string &newName);
+    quadrimon(std::string _name);
+    std::string getName() const;
+    void setName(const std::string &newName);
 
     int getType() const;
     void setType(int newType);
@@ -21,9 +21,9 @@ public:
 
     bool getQuad_valid() const;
     void setQuad_valid(bool newQuad_valid);
-    string toString();
+    std::string toString();
 private:
-    string name;
+    std::string name;
     int type =0; // 1 = feu , 2 = vent , 3 = eau
     int attaque=0;
     int pv=0;

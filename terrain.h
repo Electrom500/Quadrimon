@@ -1,16 +1,16 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 #include "iostream"
-using namespace std;
+
 
 class terrain
 {
 public:
     terrain();
-    terrain(string _name,int _nb_tours,bool _permanant);
+    terrain(std::string _name,int _nb_tours,bool _permanant);
 
-    string getName() const;
-    void setName(const string &newName);
+    std::string getName() const;
+    void setName(const std::string &newName);
 
     int getNb_tours() const;
     void setNb_tours(int newNb_tours);
@@ -19,7 +19,7 @@ public:
     void setPermanant(bool newPermanant);
 
 private:
-    string name;
+    std::string name;
     int nb_tours;
     bool permanant;
 };

@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "iostream"
 #include "joueur.h"
-using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,8 +18,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void Set_Carte_trouvee(string Ct);
-    string Get_Carte_trouvee();
+    void Set_Carte_trouvee(std::string Ct);
+    std::string Get_Carte_trouvee();
 
     int getEtatJeu() const;
     void setEtatJeu(int newEtatJeu);
@@ -33,8 +32,8 @@ public:
     void reco_close();
     void switch_quadri_actif();
     void switch_tour_joueur();
-    void set_inst_txt(string txt_temp);
-    void set_capt_butt_txt(string txt_temp);
+    void set_inst_txt(std::string txt_temp);
+    void set_capt_butt_txt(std::string txt_temp);
     void actualiser_affichage_txt();
 
 private slots:
@@ -50,7 +49,7 @@ private:
 
     Ui::MainWindow *ui;
 
-    string Carte_trouvee;
+    std::string Carte_trouvee;
     QString txt_inst_temp;
     QString txt_button_temp;
     bool choix_quad_done = false;

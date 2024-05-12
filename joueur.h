@@ -6,7 +6,6 @@
 
 #include "terrain.h"
 #include "quadrimon.h"
-using namespace std;
 class joueur
 {
 public:
@@ -23,11 +22,13 @@ public:
     bool est_attaque(int degats,int type);
     int degats_a_infliger();
 
-    string get_q1_txt();
-    string get_q2_txt();
+    std::string get_q1_txt();
+    std::string get_q2_txt();
 
     bool getQ1_ko() const;
     bool getQ2_ko() const;
+
+    std::string getNameQuadActif();
 
     int get_type_attaque();
 private:

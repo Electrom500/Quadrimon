@@ -1,13 +1,13 @@
 #include "quadrimon.h"
 #include <vector>
 #include <algorithm>
-using namespace std;
-vector<string> allQuadrimon = {"Cylindrus", "Gizeh", "Flamby", "Khone","Menu","Olaf","Saladier","Soleil","Glace","None"};
 
-int trouverIndice(const vector<string>& liste, const string& recherche) {
-    auto it = find(liste.begin(), liste.end(), recherche);
+std::vector<std::string> allQuadrimon = {"Cylindrus", "Gizeh", "Flamby", "Khone","Menu","Olaf","Saladier","Soleil","Glace","None"};
+
+int trouverIndice(const std::vector<std::string>& liste, const std::string& recherche) {
+    auto it = std::find(liste.begin(), liste.end(), recherche);
     if (it != liste.end()) {
-        return distance(liste.begin(), it);
+        return std::distance(liste.begin(), it);
     } else {
         return -1;
     }
@@ -17,7 +17,7 @@ quadrimon::quadrimon()
 {
 }
 
-quadrimon::quadrimon(string _name)
+quadrimon::quadrimon(std::string _name)
 {
     name = _name;
     int id = trouverIndice(allQuadrimon,name)+1;
@@ -90,17 +90,17 @@ quadrimon::quadrimon(string _name)
 
     default:
 
-        cout << "ERROR OPTION IMPOSSIBLE" << endl;
+        std::cout << "ERROR OPTION IMPOSSIBLE" << std::endl;
         break;
     }
 }
 
-string quadrimon::getName() const
+std::string quadrimon::getName() const
 {
     return name;
 }
 
-void quadrimon::setName(const string &newName)
+void quadrimon::setName(const std::string &newName)
 {
     name = newName;
 }
@@ -135,9 +135,9 @@ void quadrimon::setQuad_valid(bool newQuad_valid)
     quad_valid = newQuad_valid;
 }
 
-string quadrimon::toString()
+std::string quadrimon::toString()
 {
-    string strType = "";
+    std::string strType = "";
     if (type==1){
         strType = "Eau";
     } else if (type==2){
@@ -145,10 +145,10 @@ string quadrimon::toString()
     } else if (type==3){
         strType = "Vent";
     }
-    string str = " Nom = " + name +
+    std::string str = " Nom = " + name +
                  "\n Type = " + strType +
-                 "\n PV = " + to_string(pv) +
-                 "\n Attaque = " + to_string(attaque);
+                 "\n PV = " + std::__cxx11::to_string(pv) +
+                 "\n Attaque = " + std::__cxx11::to_string(attaque);
     return str;
 }
 

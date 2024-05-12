@@ -8,16 +8,15 @@
 #include "opencv2/features2d.hpp"
 
 using namespace cv;
-using namespace std;
 
-int Reco_carte::detectCard(string path)
+int Reco_carte::detectCard(std::string path)
 {
     if (!captureMat.empty()){
     Mat img1 = imread(path, IMREAD_GRAYSCALE);
     Mat img2 = captureMat;
     if ( img1.empty() )
     {
-        cout << "Could not open or find the image!\n" << endl;
+        std::cout << "Could not open or find the image!\n" << std::endl;
     }
 
     //-- Step 1: Detect the keypoints using SIFT Detector, compute the descriptors
@@ -43,7 +42,7 @@ int Reco_carte::detectCard(string path)
             good_matches.push_back(knn_matches[i][0]);
         }
     }
-    //cout<<"Il y a : "<< good_matches.size()<< "good matches "<<endl;
+    //cout<<"Il y a : "<< good_matches.size()<< "good matches "<<std::endl;
     return good_matches.size();
     }
     return 0;
@@ -56,7 +55,7 @@ void Reco_carte::Capture()
 {
     if(!capture.isOpened())
     {
-        cerr<<"Error opening the default camera"<<endl;
+        std::cerr<<"Error opening the default camera"<<std::endl;
     }
 
     Mat frame;
@@ -65,7 +64,7 @@ void Reco_carte::Capture()
 
         // check if the frame is empty
         if (frame.empty()) {
-            cerr << "Error: Captured frame is empty" << endl;
+            std::cerr << "Error: Captured frame is empty" << std::endl;
 
         }
 
@@ -85,18 +84,18 @@ void Reco_carte::charger_image(QString cheminImage) {
     ui->card_match_label->setPixmap(QPixmap::fromImage(image));
 }
 
-string Reco_carte::getLast_carte_detect() const
+std::string Reco_carte::getLast_carte_detect() const
 {
     return last_carte_detect;
 }
 
-void Reco_carte::setLast_carte_detect(const string &newLast_carte_detect)
+void Reco_carte::setLast_carte_detect(const std::string &newLast_carte_detect)
 {
     last_carte_detect = newLast_carte_detect;
 }
 
-void Reco_carte::actualiser_card_match_label(string carte_detect){
-    string path ="";
+void Reco_carte::actualiser_card_match_label(std::string carte_detect){
+    std::string path ="";
     if (carte_detect == "Cylindrus"){ path = "../quadrimon/cartes/codes/cylindrus.png";}
     else if (carte_detect == "Gizeh"){ path = "../quadrimon/cartes/codes/gizeh.png";}
     else if (carte_detect == "Flamby"){ path = "../quadrimon/cartes/codes/flamby.png";}
@@ -122,10 +121,10 @@ void Reco_carte::testCartes(){
     int nb_max = 0;
     bool stop = false;
 
-    string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
+    std::string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;
-    cout<<nb<<endl;
-    string carte_detect = "None";
+    std::cout<<nb<<std::endl;
+    std::string carte_detect = "None";
     if (nb > 20) {
         if(nb>50){stop=true;}
         carte_detect = "Cylindrus";
@@ -133,9 +132,9 @@ void Reco_carte::testCartes(){
     }
 
     if(!stop){
-    string path_gizeh = "../quadrimon/cartes/codes/gizeh.png";
+    std::string path_gizeh = "../quadrimon/cartes/codes/gizeh.png";
     nb = detectCard(path_gizeh);
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Gizeh";
@@ -143,9 +142,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    string path_flamby = "../quadrimon/cartes/codes/flamby.png";
+    std::string path_flamby = "../quadrimon/cartes/codes/flamby.png";
     nb = detectCard(path_flamby)*3;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Flamby";
@@ -153,9 +152,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    string path_glace = "../quadrimon/cartes/codes/glace.png";
+    std::string path_glace = "../quadrimon/cartes/codes/glace.png";
     nb = detectCard(path_glace)/2.3;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Glace";
@@ -163,9 +162,9 @@ void Reco_carte::testCartes(){
     };}
 
     if(!stop){
-    string path_khone = "../quadrimon/cartes/codes/khone.png";
+    std::string path_khone = "../quadrimon/cartes/codes/khone.png";
     nb = detectCard(path_khone)/5;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Khone";
@@ -173,9 +172,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    string path_menu = "../quadrimon/cartes/codes/menu.png";
+    std::string path_menu = "../quadrimon/cartes/codes/menu.png";
     nb = detectCard(path_menu)/13;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Menu";
@@ -183,9 +182,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    string path_olaf = "../quadrimon/cartes/codes/olaf.png";
+    std::string path_olaf = "../quadrimon/cartes/codes/olaf.png";
     nb = detectCard(path_olaf)/3;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Olaf";
@@ -193,9 +192,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    string path_sala = "../quadrimon/cartes/codes/saladier.png";
+    std::string path_sala = "../quadrimon/cartes/codes/saladier.png";
     nb = detectCard(path_sala)*2;
-    cout<<nb<<endl;
+    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Saladier";
@@ -203,9 +202,9 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-        string path_soleil = "../quadrimon/cartes/codes/soleil.png";
+        std::string path_soleil = "../quadrimon/cartes/codes/soleil.png";
         nb = detectCard(path_soleil)/3;
-        cout<<nb<<endl;
+        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "Soleil";
@@ -216,7 +215,7 @@ void Reco_carte::testCartes(){
     ui->nom_carte_label->setText(card_match_txt);
     actualiser_card_match_label(carte_detect);
     setLast_carte_detect(carte_detect);
-    cout<<carte_detect<<endl;
+    std::cout<<carte_detect<<std::endl;
 }
 
 void Reco_carte::updateImage()

@@ -7,7 +7,7 @@
 
 #include "mainwindow.h"
 
-using namespace std;
+
 namespace Ui {
 class Reco_carte;
 }
@@ -23,16 +23,16 @@ public:
     void Capture();
     void Start();
     cv::VideoCapture capture;
-    int detectCard(string path);
+    int detectCard(std::string path);
 
-    string getLast_carte_detect() const;
-    void setLast_carte_detect(const string &newLast_carte_detect);
+    std::string getLast_carte_detect() const;
+    void setLast_carte_detect(const std::string &newLast_carte_detect);
 
 private:
     MainWindow *mw;
-    void actualiser_card_match_label(string path);
+    void actualiser_card_match_label(std::string path);
     void charger_image(QString cheminImage);
-    string last_carte_detect = "None";
+    std::string last_carte_detect = "None";
 
 
 private slots:

@@ -3,19 +3,19 @@
 
 terrain::terrain(){}
 
-terrain::terrain(string _name, int _nb_tours, bool _permanant)
+terrain::terrain(std::string _name, int _nb_tours, bool _permanant)
 {
     name = _name;
     nb_tours = _nb_tours;
     permanant = _permanant;
 }
 
-string terrain::getName() const
+std::string terrain::getName() const
 {
     return name;
 }
 
-void terrain::setName(const string &newName)
+void terrain::setName(const std::string &newName)
 {
     name = newName;
 }

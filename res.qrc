@@ -1,0 +1,30 @@
+<RCC>
+	<qresource prefix="/">
+		<file>res/fond_marais.png</file>
+		<file>res/sol_marais.png</file>
+
+		<file>res/fond_toiles.png</file>
+		<file>res/sol_toiles.png</file>
+
+		<file>res/fond_ouragan.png</file>
+		<file>res/sol_ouragan.png</file>
+
+		<file>res/fond_chat.png</file>
+		<file>res/sol_chat.png</file>
+
+		<file>res/fond_grotte.png</file>
+		<file>res/sol_grotte.png</file>
+
+		<file>res/fond_volcan.png</file>
+		<file>res/sol_volcan.png</file>
+
+		<file>res/fond_foret.png</file>
+		<file>res/sol_foret.png</file>
+
+		<file>res/fond_infirmerie.png</file>
+		<file>res/sol_infirmerie.png</file>
+
+		<file>res/fond_plage.png</file>
+		<file>res/sol_plage.png</file>
+	</qresource>
+</RCC>
