@@ -14,10 +14,10 @@ class quadrimon_affiche
 private :
     std::string m_quad;
     int m_joueur;
-    GLUquadric* m_Quadric;
     bool m_att;
     float t_att;
     float m_time;
+    GLUquadric* m_Quadric;
 
 public:
     quadrimon_affiche(std::string quad, int joueur);

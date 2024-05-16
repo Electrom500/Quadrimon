@@ -296,6 +296,7 @@ void MainWindow::actualiser_affichage_txt()
     ui->J1_quad2_label->setText(txt_temp);
     ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
     ui->openGLWidget->changeTerrJ1(J1->getTerrainActif().getName());
+    ui->openGLWidget->attaqueQuadJ1();
 
     // "Affichage" des quad de j2
     txt_temp=QString::fromStdString(J2->get_q1_txt());

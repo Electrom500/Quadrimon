@@ -35,8 +35,6 @@ protected:
     void paintGL();
 
 
-signals:
-
 private:
     quadrimon_affiche* quadD;
     quadrimon_affiche* quadG;

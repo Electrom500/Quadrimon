@@ -9,6 +9,7 @@
 
 class terrain_affiche
 {
+private:
     std::string m_type;
     int m_joueur;
     GLUquadric* m_Quadric;

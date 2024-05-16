@@ -42,11 +42,11 @@ void scene::initializeGL()
     // Activation du zbuffer
     glEnable(GL_DEPTH_TEST);
 
-    quadD=new quadrimon_affiche("",1);
-    quadG=new quadrimon_affiche("",2);
+    quadD=new quadrimon_affiche("Cylindrus",1);
+    quadG=new quadrimon_affiche("Olaf",2);
 
-    terrD=new terrain_affiche("",1);
-    terrG=new terrain_affiche("",2);
+    terrD=new terrain_affiche("volcan",1);
+    terrG=new terrain_affiche("infirmerie",2);
 
 }
 
