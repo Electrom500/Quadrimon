@@ -39,6 +39,7 @@ SOURCES += \
     quadrimon.cpp \
     quadrimon_affiche.cpp \
     reco_carte.cpp \
+    reco_terrain.cpp \
     scene.cpp \
     terrain.cpp \
     terrain_affiche.cpp
@@ -49,6 +50,7 @@ HEADERS += \
     quadrimon.h \
     quadrimon_affiche.h \
     reco_carte.h \
+    reco_terrain.h \
     scene.h \
     terrain.h \
     terrain_affiche.h
@@ -57,7 +59,8 @@ INCLUDEPATH +=$$(OPENCV_DIR)\..\..\include
 
 FORMS += \
     mainwindow.ui \
-    reco_carte.ui
+    reco_carte.ui \
+    reco_terrain.ui
 
 LIBS += -L$$(OPENCV_DIR)\lib \
         -lopencv_core455 \

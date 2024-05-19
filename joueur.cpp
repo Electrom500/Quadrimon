@@ -23,12 +23,12 @@ void joueur::switchIndexQuadActif1()
     indexQuadActif1 = !indexQuadActif1 ;
 }
 
-terrain joueur::getTerrainActif() const
+terrain* joueur::getTerrainActif()
 {
     return terrainActif;
 }
 
-void joueur::setTerrainActif(const terrain &newTerrainActif)
+void joueur::setTerrainActif(terrain* newTerrainActif)
 {
     terrainActif = newTerrainActif;
 }

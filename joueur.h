@@ -13,8 +13,8 @@ public:
     bool getIndexQuadActif1();
     void switchIndexQuadActif1();
 
-    terrain getTerrainActif() const;
-    void setTerrainActif(const terrain &newTerrainActif);
+    terrain* getTerrainActif();
+    void setTerrainActif(terrain* newTerrainActif);
 
     void addQuad1(quadrimon* q1);
     void addQuad2(quadrimon* q2);
@@ -42,7 +42,7 @@ private:
     bool attaque_boostee(int type_attaque);
 
     bool indexQuadActif1 = true; // true = 1, false = 2
-    terrain terrainActif;
+    terrain* terrainActif;
 };
 
 #endif // JOUEUR_H

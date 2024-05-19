@@ -16,7 +16,7 @@ int Reco_carte::detectCard(std::string path)
     Mat img2 = captureMat;
     if ( img1.empty() )
     {
-        std::cout << "Could not open or find the image!\n" << std::endl;
+        std::cout << "Could not open or find the image!\n "<< std::endl;
     }
 
     //-- Step 1: Detect the keypoints using SIFT Detector, compute the descriptors
@@ -95,16 +95,16 @@ void Reco_carte::setLast_carte_detect(const std::string &newLast_carte_detect)
 }
 
 void Reco_carte::actualiser_card_match_label(std::string carte_detect){
-    std::string path ="";
-    if (carte_detect == "Cylindrus"){ path = "../quadrimon/cartes/codes/cylindrus.png";}
-    else if (carte_detect == "Gizeh"){ path = "../quadrimon/cartes/codes/gizeh.png";}
-    else if (carte_detect == "Flamby"){ path = "../quadrimon/cartes/codes/flamby.png";}
-    else if (carte_detect == "Khone"){ path = "../quadrimon/cartes/codes/khone.png";}
-    else if (carte_detect == "Menu"){ path = "../quadrimon/cartes/codes/menu.png";}
-    else if (carte_detect == "Olaf"){ path = "../quadrimon/cartes/codes/olaf.png";}
-    else if (carte_detect == "Saladier"){ path = "../quadrimon/cartes/codes/saladier.png";}
-    else if (carte_detect == "Soleil"){ path = "../quadrimon/cartes/codes/soleil.png";}
-    else if (carte_detect == "Glace"){ path = "../quadrimon/cartes/codes/glace.png";}
+    std::string path ="../../cartes/codes/";
+    if (carte_detect == "Cylindrus"){ path += "cylindrus.png";}
+    else if (carte_detect == "Gizeh"){ path += "gizeh.png";}
+    else if (carte_detect == "Flamby"){ path += "flamby.png";}
+    else if (carte_detect == "Khone"){ path += "khone.png";}
+    else if (carte_detect == "Menu"){ path += "menu.png";}
+    else if (carte_detect == "Olaf"){ path += "olaf.png";}
+    else if (carte_detect == "Saladier"){ path += "saladier.png";}
+    else if (carte_detect == "Soleil"){ path += "soleil.png";}
+    else if (carte_detect == "Glace"){ path += "glace.png";}
 
     if (path != ""){
         QString Qpath=QString::fromStdString(path);
@@ -120,8 +120,9 @@ void Reco_carte::testCartes(){
 
     int nb_max = 0;
     bool stop = false;
+    std::string path ="../../cartes/codes/";
 
-    std::string path_cyl = "../quadrimon/cartes/codes/cylindrus.png";
+    std::string path_cyl = path + "cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;
     std::cout<<nb<<std::endl;
     std::string carte_detect = "None";
@@ -132,7 +133,7 @@ void Reco_carte::testCartes(){
     }
 
     if(!stop){
-    std::string path_gizeh = "../quadrimon/cartes/codes/gizeh.png";
+    std::string path_gizeh = path + "gizeh.png";
     nb = detectCard(path_gizeh);
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -142,7 +143,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    std::string path_flamby = "../quadrimon/cartes/codes/flamby.png";
+    std::string path_flamby = path + "flamby.png";
     nb = detectCard(path_flamby)*3;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -152,7 +153,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    std::string path_glace = "../quadrimon/cartes/codes/glace.png";
+    std::string path_glace = path + "glace.png";
     nb = detectCard(path_glace)/2.3;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -162,7 +163,7 @@ void Reco_carte::testCartes(){
     };}
 
     if(!stop){
-    std::string path_khone = "../quadrimon/cartes/codes/khone.png";
+    std::string path_khone = path + "khone.png";
     nb = detectCard(path_khone)/5;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -172,7 +173,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    std::string path_menu = "../quadrimon/cartes/codes/menu.png";
+    std::string path_menu = path + "menu.png";
     nb = detectCard(path_menu)/13;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -182,7 +183,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    std::string path_olaf = "../quadrimon/cartes/codes/olaf.png";
+    std::string path_olaf = path + "olaf.png";
     nb = detectCard(path_olaf)/3;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -192,7 +193,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-    std::string path_sala = "../quadrimon/cartes/codes/saladier.png";
+    std::string path_sala = path + "saladier.png";
     nb = detectCard(path_sala)*2;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
@@ -202,7 +203,7 @@ void Reco_carte::testCartes(){
     }}
 
     if(!stop){
-        std::string path_soleil = "../quadrimon/cartes/codes/soleil.png";
+        std::string path_soleil = path + "soleil.png";
         nb = detectCard(path_soleil)/3;
         std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){

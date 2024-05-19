@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "reco_carte.h"
+#include "reco_terrain.h"
 
 #include <QMessageBox>
 #include <QFrame>
@@ -30,8 +31,39 @@ void MainWindow::on_capture_button_clicked()
         restart();
     }else if (phaseIni<=4){ // PARTIE INITIALISATION DES QUADRIMONS
         Reco_carte *r = new Reco_carte(this);
+        // Reco_terrain *r = new Reco_terrain(this); // POUR TESTER LA RECONNAISSANCE DES TERRRAINS
         r->exec();
     } else { // TOURS CLASSIQUES
+
+        // PARTIE UTILISATION DES TERRAINS
+        if (terrain_J1_actif){
+            if (J1->getTerrainActif()->getEffet_spe()){
+                if(J1->est_attaque(J1->getTerrainActif()->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                    etatJeu=3;
+                    set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+                    set_capt_butt_txt(" Restart ");
+                    J1_gagne = false;
+                }
+            } else { // TODO
+                if(J1->getTerrainActif()->getName()=="grotte"){
+                    choix_quad_done = true;
+                } else if (J1->getTerrainActif()->getName()=="toile"){
+
+                }else if (J1->getTerrainActif()->getName()=="chat"){
+
+                }else if (J1->getTerrainActif()->getName()=="volcan"){
+
+                }else if (J1->getTerrainActif()->getName()=="foret"){
+
+                }else{ // Plage
+
+                }
+            }
+            if (J1->getTerrainActif()->reduc_tour()){
+                terrain_J1_actif = false;
+            }
+        }
+
 
         if (!choix_quad_done){ // PARTIE CHANGEMENT DE QUAD ACTIF
             QMessageBox::StandardButton reply;
@@ -89,6 +121,14 @@ void MainWindow::on_capture_button_clicked()
                     set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
                 }
             }
+            if (premiere_attaque){
+                if (getEtatJeu()==1){
+                    ui->interrup_J2_button->setEnabled(true);
+                } else {
+                    ui->interrup_J1_button->setEnabled(true);
+                }
+                premiere_attaque=false;
+            }
         }
     }
 }
@@ -113,6 +153,16 @@ std::string MainWindow::Get_Carte_trouvee(){
     return Carte_trouvee;
 }
 
+void MainWindow::Set_Terrain_trouvee(std::string Tt)
+{
+    Terrain_trouvee = Tt;
+}
+
+std::string MainWindow::Get_Terrain_trouvee()
+{
+    return Terrain_trouvee;
+}
+
 void MainWindow::start(){
     // Partie Nombre aléatoire pour déterminer le joueur qui commence
     std::random_device rd;
@@ -122,7 +172,11 @@ void MainWindow::start(){
 
     set_inst_txt("Le Joueur tiré au sort pour commencer est : Joueur "+std::__cxx11::to_string(getEtatJeu())+"\n Il doit enregistrer son premier Quadrimon");
     set_capt_butt_txt("Enregistrer le premier Quadrimon de Joueur "+std::__cxx11::to_string(getEtatJeu()));
-
+    if (getEtatJeu()==1){
+        ui->interrup_J1_button->setEnabled(false);
+    } else {
+        ui->interrup_J2_button->setEnabled(false);
+    }
 }
 
 void MainWindow::restart()
@@ -257,6 +311,20 @@ void MainWindow::reco_close()
     }
 }
 
+void MainWindow::reco_terrain_close()
+{
+    terrain *t = new terrain(Get_Terrain_trouvee());
+    if (t->getTerrain_valid()){
+        if (terrain_a_changer_J1){
+            J1->setTerrainActif(t);
+            terrain_J1_actif = true;
+        }else{
+            J2->setTerrainActif(t);
+            terrain_J1_actif = true;
+        }
+    }
+}
+
 void MainWindow::switch_quadri_actif(){
     if (etatJeu==1){
         J1->switchIndexQuadActif1();
@@ -289,22 +357,22 @@ void MainWindow::set_capt_butt_txt(std::string txt_temp)
 
 void MainWindow::actualiser_affichage_txt()
 {
-    // "Affichage" des quad de j1
+    // Affichage des quad de j1
     QString txt_temp=QString::fromStdString(J1->get_q1_txt());
     ui->J1_quad1_label->setText(txt_temp);
     txt_temp=QString::fromStdString(J1->get_q2_txt());
     ui->J1_quad2_label->setText(txt_temp);
     ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
-    ui->openGLWidget->changeTerrJ1(J1->getTerrainActif().getName());
+    ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
     ui->openGLWidget->attaqueQuadJ1();
 
-    // "Affichage" des quad de j2
+    // Affichage des quad de j2
     txt_temp=QString::fromStdString(J2->get_q1_txt());
     ui->J2_quad1_label->setText(txt_temp);
     txt_temp=QString::fromStdString(J2->get_q2_txt());
     ui->J2_quad2_label->setText(txt_temp);
     ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
-    ui->openGLWidget->changeTerrJ2(J2->getTerrainActif().getName());
+    ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
 
     if(J1->getIndexQuadActif1()){ //IDENTIFICATION DU QUADRIMON ACTIF DE J1
         ui->J1_quad1_label->setFrameShape(QFrame::Box);
@@ -322,3 +390,18 @@ void MainWindow::actualiser_affichage_txt()
         ui->J2_quad1_label->setFrameShape(QFrame::NoFrame);
     }
 }
+
+void MainWindow::on_interrup_J1_button_clicked()
+{
+    terrain_a_changer_J1 = true;
+    Reco_terrain *r = new Reco_terrain(this);
+    r->exec();
+}
+
+void MainWindow::on_interrup_J2_button_clicked()
+{
+    terrain_a_changer_J1 = false;
+    Reco_terrain *r = new Reco_terrain(this);
+    r->exec();
+}
+
