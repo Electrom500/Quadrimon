@@ -28,6 +28,8 @@ public:
     std::string getLast_carte_detect() const;
     void setLast_carte_detect(const std::string &newLast_carte_detect);
 
+    Ui::Reco_terrain *ui;
+
 private:
     MainWindow *mw;
     void actualiser_card_match_label(std::string path);
@@ -42,8 +44,6 @@ private slots:
 
     void on_valid_button_clicked();
 
-private:
-    Ui::Reco_terrain *ui;
 };
 
 #endif // RECO_TERRAIN_H

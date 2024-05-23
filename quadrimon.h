@@ -23,7 +23,7 @@ public:
     void setQuad_valid(bool newQuad_valid);
     std::string toString();
 private:
-    std::string name;
+    std::string name = "";
     int type =0; // 1 = feu , 2 = vent , 3 = eau
     int attaque=0;
     int pv=0;

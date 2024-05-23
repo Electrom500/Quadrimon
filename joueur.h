@@ -31,6 +31,8 @@ public:
     std::string getNameQuadActif();
 
     int get_type_attaque();
+    bool getTerrainInitialized() const;
+
 private:
     bool ko = false;
     bool q1_ko =false;
@@ -42,7 +44,9 @@ private:
     bool attaque_boostee(int type_attaque);
 
     bool indexQuadActif1 = true; // true = 1, false = 2
+
     terrain* terrainActif;
+    bool terrainInitialized = false;
 };
 
 #endif // JOUEUR_H

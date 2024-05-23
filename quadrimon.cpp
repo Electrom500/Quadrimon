@@ -137,6 +137,9 @@ void quadrimon::setQuad_valid(bool newQuad_valid)
 
 std::string quadrimon::toString()
 {
+    if(!quad_valid){
+        return "";
+    }
     std::string strType = "";
     if (type==1){
         strType = "Eau";

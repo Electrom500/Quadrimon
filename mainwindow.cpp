@@ -36,7 +36,7 @@ void MainWindow::on_capture_button_clicked()
     } else { // TOURS CLASSIQUES
 
         // PARTIE UTILISATION DES TERRAINS
-        if (terrain_J1_actif){
+        if (J1->getTerrainActif()->getTerrain_enable()){ //VERIFIE SI LE TERRAIN EST ACTIF
             if (J1->getTerrainActif()->getEffet_spe()){
                 if(J1->est_attaque(J1->getTerrainActif()->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
                     etatJeu=3;
@@ -59,9 +59,9 @@ void MainWindow::on_capture_button_clicked()
 
                 }
             }
-            if (J1->getTerrainActif()->reduc_tour()){
-                terrain_J1_actif = false;
-            }
+            J1->getTerrainActif()->reduc_tour();
+
+            actualiser_affichage_txt();
         }
 
 
@@ -317,12 +317,14 @@ void MainWindow::reco_terrain_close()
     if (t->getTerrain_valid()){
         if (terrain_a_changer_J1){
             J1->setTerrainActif(t);
-            terrain_J1_actif = true;
         }else{
             J2->setTerrainActif(t);
-            terrain_J1_actif = true;
         }
+        actualiser_affichage_txt();
+    } else {
+        std::cout<< " TERRAIN INVALIDE ?"<<std::endl;
     }
+
 }
 
 void MainWindow::switch_quadri_actif(){
@@ -357,22 +359,25 @@ void MainWindow::set_capt_butt_txt(std::string txt_temp)
 
 void MainWindow::actualiser_affichage_txt()
 {
-    // Affichage des quad de j1
-    QString txt_temp=QString::fromStdString(J1->get_q1_txt());
-    ui->J1_quad1_label->setText(txt_temp);
-    txt_temp=QString::fromStdString(J1->get_q2_txt());
-    ui->J1_quad2_label->setText(txt_temp);
-    ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
-    ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
-    ui->openGLWidget->attaqueQuadJ1();
+    QString txt_temp;
+    if (phaseIni>3){
+        // Affichage des quad de j1
+        txt_temp=QString::fromStdString(J1->get_q1_txt());
+        ui->J1_quad1_label->setText(txt_temp);
+        txt_temp=QString::fromStdString(J1->get_q2_txt());
+        ui->J1_quad2_label->setText(txt_temp);
+        ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
+        ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
+        ui->openGLWidget->attaqueQuadJ1();
 
-    // Affichage des quad de j2
-    txt_temp=QString::fromStdString(J2->get_q1_txt());
-    ui->J2_quad1_label->setText(txt_temp);
-    txt_temp=QString::fromStdString(J2->get_q2_txt());
-    ui->J2_quad2_label->setText(txt_temp);
-    ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
-    ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+        // Affichage des quad de j2
+        txt_temp=QString::fromStdString(J2->get_q1_txt());
+        ui->J2_quad1_label->setText(txt_temp);
+        txt_temp=QString::fromStdString(J2->get_q2_txt());
+        ui->J2_quad2_label->setText(txt_temp);
+        ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
+        ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+    }
 
     if(J1->getIndexQuadActif1()){ //IDENTIFICATION DU QUADRIMON ACTIF DE J1
         ui->J1_quad1_label->setFrameShape(QFrame::Box);
@@ -389,6 +394,35 @@ void MainWindow::actualiser_affichage_txt()
         ui->J2_quad2_label->setFrameShape(QFrame::Box);
         ui->J2_quad1_label->setFrameShape(QFrame::NoFrame);
     }
+
+
+    //LABEL DU TERRAIN ACTIF DE J1
+    std::string string_temp = "";
+    if(J1->getTerrainInitialized()){
+        if(J1->getTerrainActif()->getTerrain_enable()){
+            string_temp = J1->getTerrainActif()->getName();
+        } else {
+            string_temp = " Aucun !";
+        }
+    }else {
+        string_temp = " Aucun !";
+    }
+    txt_temp=QString::fromStdString("Terrain actif : "+string_temp);
+    ui->J1_terrain_label->setText(txt_temp);
+
+    //LABEL DU TERRAIN ACTIF DE J2
+    if(J2->getTerrainInitialized()){
+        if(J2->getTerrainActif()->getTerrain_enable()){
+            string_temp = J2->getTerrainActif()->getName();
+        } else {
+            string_temp = " Aucun !";
+        }
+    }else {
+        string_temp = " Aucun !";
+    }
+    txt_temp=QString::fromStdString("Terrain actif : "+string_temp);
+    ui->J2_terrain_label->setText(txt_temp);
+
 }
 
 void MainWindow::on_interrup_J1_button_clicked()

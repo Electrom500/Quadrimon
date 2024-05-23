@@ -33,8 +33,8 @@ public:
     void iniquad(); // PERMET DE CHARGER LES 2 QUAD DE CHAQUE JOUEUR
     void attaque();
 
-    void reco_close();
-    void reco_terrain_close();
+    void reco_close(); //S EFFECTUE A LA VALIDATION DE LA FENETRE DE RECONNAISSANCE DE QUADRMON
+    void reco_terrain_close(); //S EFFECTUE A LA VALIDATION DE LA FENETRE DE RECONNAISSANCE DE TERRAIN
     void switch_quadri_actif();
     void switch_tour_joueur();
     void set_inst_txt(std::string txt_temp);
@@ -50,9 +50,7 @@ private slots:
 
 private:
     joueur* J1 = new joueur;
-    bool terrain_J1_actif= false;
     joueur* J2 = new joueur;
-    bool terrain_J2_actif= false;
 
     int etatJeu = 0; // 1 = J1 , 2 = J2 , 0 = initial, 3 = fin de partie
     bool J1_gagne = true;

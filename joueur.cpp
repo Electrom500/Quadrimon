@@ -30,7 +30,9 @@ terrain* joueur::getTerrainActif()
 
 void joueur::setTerrainActif(terrain* newTerrainActif)
 {
+
     terrainActif = newTerrainActif;
+    terrainInitialized = true;
 }
 
 void joueur::addQuad1(quadrimon* q)
@@ -119,4 +121,9 @@ bool joueur::attaque_boostee(int type_attaque) //RENVOIE TRUE SI LE TYPE DE L'AT
         }
     }
     return false;
+}
+
+bool joueur::getTerrainInitialized() const
+{
+    return terrainInitialized;
 }

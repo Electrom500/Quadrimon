@@ -249,7 +249,6 @@ Reco_terrain::Reco_terrain(MainWindow *mw_,QWidget *parent)
     , ui(new Ui::Reco_terrain)
 {
     ui->setupUi(this);
-    //connect(this, &Reco_carte::destroyed, this, &Reco_carte::deleteLater);
     capture = VideoCapture(0);
 
     QTimer *timer = new QTimer(this);
