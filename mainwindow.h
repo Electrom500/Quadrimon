@@ -58,13 +58,15 @@ private:
     bool premiere_attaque = true;
 
     bool terrain_a_changer_J1 = true; // true pour changer le terrain de J1 apres une interruption, false pour J2
+    bool choix_quad_done = false;
+    bool terrain_deja_jouer = false; // sert a eviter de jouer 2 fois les terrains (lors du choix du quad et du choix de l'attaque)
+
     Ui::MainWindow *ui;
 
     std::string Carte_trouvee;
     std::string Terrain_trouvee;
+
     QString txt_inst_temp;
     QString txt_button_temp;
-    bool choix_quad_done = false;
-
 };
 #endif // MAINWINDOW_H

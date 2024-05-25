@@ -22,9 +22,13 @@ public:
     bool getQuad_valid() const;
     void setQuad_valid(bool newQuad_valid);
     std::string toString();
+    int getType_origine() const;
+    void setType_origine(int newType_origine);
+
 private:
     std::string name = "";
     int type =0; // 1 = feu , 2 = vent , 3 = eau
+    int type_origine =0;
     int attaque=0;
     int pv=0;
     bool quad_valid = false;

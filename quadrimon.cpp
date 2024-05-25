@@ -93,6 +93,7 @@ quadrimon::quadrimon(std::string _name)
         std::cout << "ERROR OPTION IMPOSSIBLE" << std::endl;
         break;
     }
+    type_origine=type;
 }
 
 std::string quadrimon::getName() const
@@ -153,6 +154,16 @@ std::string quadrimon::toString()
                  "\n PV = " + std::__cxx11::to_string(pv) +
                  "\n Attaque = " + std::__cxx11::to_string(attaque);
     return str;
+}
+
+int quadrimon::getType_origine() const
+{
+    return type_origine;
+}
+
+void quadrimon::setType_origine(int newType_origine)
+{
+    type_origine = newType_origine;
 }
 
 int quadrimon::getAttaque() const

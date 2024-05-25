@@ -45,10 +45,93 @@ void joueur::addQuad2(quadrimon* q)
     q2=q;
 }
 
+int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joueur) // return : 0=default, 1=joueur a perdu, 2= grotte,
+    // autre terrain existe sert a eviter les erreurs sur un joueur qui prend chat alors que l'autre joueur n'a pas de terrain
+{
+    if(terrainInitialized){ // verifie qu'un terrain a été initialisé pour eviter les errerus de pointeurs null
+        if (terrainActif->getTerrain_enable()){ //VERIFIE SI LE TERRAIN EST ACTIF
+            std::string nom_terrain = terrainActif->getName();
+            if(nom_terrain=="chat" && autre_terrain_existe){
+                nom_terrain = terrain_autre_joueur->getName();
+            }
+
+            if (terrainActif->getEffet_spe()){
+                if(est_attaque(terrainActif->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                    return 1;
+                }
+            } else { // TODO
+                if(nom_terrain=="grotte"){
+                    return 2;
+                } else if (nom_terrain=="toile"){
+                    if(!terrainActif->getEffet_unique_done()){
+
+                        if(q1->getAttaque()>100){
+                            q1->setAttaque(q1->getAttaque()-100);
+                        }else{
+                            q1->setAttaque(0); // Pour eviter d'avoir une attaque qui heal l'adversaire
+                        }
+
+                        if(q2->getAttaque()>100){
+                            q2->setAttaque(q2->getAttaque()-100);
+                        }else{
+                            q2->setAttaque(0); // Pour eviter d'avoir une attaque qui heal l'adversaire
+                        }
+                        terrainActif->setEffet_unique_done(true);
+                    }
+                }else if (nom_terrain=="plage"){
+                    double_boost=true;
+                    if(!terrainActif->getEffet_unique_done()){
+                        q1->setType(3);
+                        q2->setType(3);
+                        terrainActif->setEffet_unique_done(true);
+                    }
+
+                }else if (nom_terrain=="volcan"){
+                    if(!terrainActif->getEffet_unique_done()){
+
+                        if(q1->getType()==1&& !q1_ko){
+                            q1->setAttaque(q1->getAttaque()+100);
+                        }
+                        q1->setType(1);
+                        if(q2->getType()==1&& !q2_ko){
+                            q1->setAttaque(q1->getAttaque()+100);
+                        }
+                        q2->setType(1);
+                        terrainActif->setEffet_unique_done(true);
+                    }
+
+                }else if (nom_terrain=="foret"){
+                    if (q1->getType_origine()==2 && !q1_ko){
+                        q1->setPv(q1->getPv()+50);
+                    }
+                    if (q2->getType_origine()==2 && !q2_ko){
+                        q2->setPv(q2->getPv()+50);
+                    }
+
+                    if(!terrainActif->getEffet_unique_done()){
+                        q1->setType(2);
+                        q2->setType(2);
+                        terrainActif->setEffet_unique_done(true);
+                    }
+
+                }
+            }
+            getTerrainActif()->reduc_tour();
+        }
+    }
+    return 0;
+}
+
 bool joueur::est_attaque(int degats, int type) // Renvoie true si plus de quadrimon vivant, false sinon
 {
-    int k =1;
-    if (attaque_boostee(type))k=2;
+    double k =1;
+    if (attaque_boostee(type)){
+        if(double_boost){
+            k=2.5;
+        } else {
+            k=2;
+        }
+    }
 
     if (indexQuadActif1) {
         q1->setPv(q1->getPv()-k*degats);
@@ -101,26 +184,36 @@ bool joueur::getQ2_ko() const
     return q2_ko;
 }
 
-bool joueur::attaque_boostee(int type_attaque) //RENVOIE TRUE SI LE TYPE DE L'ATTAQUANT A UN AVANTAGE SUR LE TYPE DU QUAD ACTIF
+double joueur::attaque_boostee(int type_attaque) //RENVOIE LE COEFF D AVANTAGE SUR LE TYPE DU QUAD ACTIF
 {
     if(type_attaque==3){ //CAS SPECIAL CAR NE REPOND PAS A LA REGLE DU +1 : type1 > type2 > type3 > type1
         if(indexQuadActif1){
             if(q1->getType()==1){
-                return true;
+                if (double_boost){
+                    return 2.5;
+                }
+                return 2;
             }
         }else{
             if(q2->getType()==1){
-                return true;
+                if (double_boost){
+                    return 2.5;
+                }
+                return 2;
             }
         }
     } else {
         if(indexQuadActif1){
-            return (q1->getType()-type_attaque == 1);
+            if(q1->getType()-type_attaque == 1){
+                return 2;
+            }
         } else {
-            return (q2->getType()-type_attaque == 1);
+            if(q2->getType()-type_attaque == 1){
+                return 2;
+            }
         }
     }
-    return false;
+    return 1;
 }
 
 bool joueur::getTerrainInitialized() const

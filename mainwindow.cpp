@@ -9,7 +9,7 @@
 #include <iostream>
 
 
-
+// -------------------- BASICS--------------------------------
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -24,6 +24,37 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// -------------------------------RE.INITIALISATION------------------------------
+void MainWindow::start(){
+    // Partie Nombre aléatoire pour déterminer le joueur qui commence
+    std::random_device rd;
+    std::mt19937 generator(rd()); // Générateur Mersenne Twister 19937
+    std::uniform_int_distribution<int> distribution(1,2);
+    setEtatJeu(distribution(generator));
+
+    set_inst_txt("Le Joueur tiré au sort pour commencer est : Joueur "+std::__cxx11::to_string(getEtatJeu())+"\n Il doit enregistrer son premier Quadrimon");
+    set_capt_butt_txt("Enregistrer le premier Quadrimon de Joueur "+std::__cxx11::to_string(getEtatJeu()));
+    if (getEtatJeu()==1){
+        ui->interrup_J1_button->setEnabled(false);
+    } else {
+        ui->interrup_J2_button->setEnabled(false);
+    }
+}
+
+void MainWindow::restart()
+{
+    delete J1;
+    delete J2;
+    J1 = new joueur;
+    J2 = new joueur;
+    etatJeu = 0;
+    phaseIni = 1;
+    choix_quad_done = false;
+    actualiser_affichage_txt();
+    start();
+}
+
+//---------------------------PHASES DE JEU--------------------------
 
 void MainWindow::on_capture_button_clicked()
 {
@@ -35,43 +66,43 @@ void MainWindow::on_capture_button_clicked()
         r->exec();
     } else { // TOURS CLASSIQUES
 
-        // PARTIE UTILISATION DES TERRAINS
-        if(etatJeu==1){
-            if(J1->getTerrainInitialized()){
-                if (J1->getTerrainActif()->getTerrain_enable()){ //VERIFIE SI LE TERRAIN EST ACTIF
-                    if (J1->getTerrainActif()->getEffet_spe()){
-                        if(J1->est_attaque(J1->getTerrainActif()->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
-                            etatJeu=3;
-                            set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
-                            set_capt_butt_txt(" Restart ");
-                            J1_gagne = false;
-                        }
-                    } else { // TODO
-                        if(J1->getTerrainActif()->getName()=="grotte"){
-                            choix_quad_done = true;
-                        } else if (J1->getTerrainActif()->getName()=="toile"){
+        if (!terrain_deja_jouer){ // PARTIE TERRAINS
+            if(etatJeu==1){
+                int result;
+                if(J2->getTerrainInitialized()){
+                    result = J1->effet_terrain(true,J2->getTerrainActif());
+                } else {
+                    result = J1->effet_terrain(false,nullptr);
+                }
 
-                        }else if (J1->getTerrainActif()->getName()=="chat"){
+                if(result ==1){
+                    etatJeu=3;
+                    set_inst_txt("J2 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+                    set_capt_butt_txt(" Restart ");
+                    J1_gagne = false;
+                } else if (result ==2){
+                    choix_quad_done = true;
+                }
+            }else{
+                int result;
+                if(J1->getTerrainInitialized()){
+                    result = J2->effet_terrain(true,J1->getTerrainActif());
+                } else {
+                    result = J2->effet_terrain(false,nullptr);
+                }
 
-                        }else if (J1->getTerrainActif()->getName()=="volcan"){
-
-                        }else if (J1->getTerrainActif()->getName()=="foret"){
-
-                        }else{ // Plage
-
-                        }
-                    }
-                    J1->getTerrainActif()->reduc_tour();
-
-                    actualiser_affichage_txt();
+                if(result ==1){
+                    etatJeu=3;
+                    set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+                    set_capt_butt_txt(" Restart ");
+                    J1_gagne = true;
+                } else if (result ==2){
+                    choix_quad_done = true;
                 }
             }
-        } else {
-            //CODE IDEM MAIS POUR J2
-            std::cout<<"OUBLIE PAS CA";
+            terrain_deja_jouer = true;
+            actualiser_affichage_txt();
         }
-
-
 
         if (!choix_quad_done){ // PARTIE CHANGEMENT DE QUAD ACTIF
             QMessageBox::StandardButton reply;
@@ -85,6 +116,7 @@ void MainWindow::on_capture_button_clicked()
             set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
 
         } else { // PARTIE ATTAQUE CLASSIQUE
+            terrain_deja_jouer = false;
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Choix attaque", "Veux tu attaquer ?",QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
@@ -142,65 +174,7 @@ void MainWindow::on_capture_button_clicked()
 }
 
 
-
-int MainWindow::getEtatJeu() const
-{
-    return etatJeu;
-}
-
-void MainWindow::setEtatJeu(int newEtatJeu)
-{
-    etatJeu = newEtatJeu;
-}
-
-void MainWindow::Set_Carte_trouvee(std::string Ct){
-    Carte_trouvee = Ct;
-}
-
-std::string MainWindow::Get_Carte_trouvee(){
-    return Carte_trouvee;
-}
-
-void MainWindow::Set_Terrain_trouvee(std::string Tt)
-{
-    Terrain_trouvee = Tt;
-}
-
-std::string MainWindow::Get_Terrain_trouvee()
-{
-    return Terrain_trouvee;
-}
-
-void MainWindow::start(){
-    // Partie Nombre aléatoire pour déterminer le joueur qui commence
-    std::random_device rd;
-    std::mt19937 generator(rd()); // Générateur Mersenne Twister 19937
-    std::uniform_int_distribution<int> distribution(1,2);
-    setEtatJeu(distribution(generator));
-
-    set_inst_txt("Le Joueur tiré au sort pour commencer est : Joueur "+std::__cxx11::to_string(getEtatJeu())+"\n Il doit enregistrer son premier Quadrimon");
-    set_capt_butt_txt("Enregistrer le premier Quadrimon de Joueur "+std::__cxx11::to_string(getEtatJeu()));
-    if (getEtatJeu()==1){
-        ui->interrup_J1_button->setEnabled(false);
-    } else {
-        ui->interrup_J2_button->setEnabled(false);
-    }
-}
-
-void MainWindow::restart()
-{
-    delete J1;
-    delete J2;
-    J1 = new joueur;
-    J2 = new joueur;
-    etatJeu = 0;
-    phaseIni = 1;
-    choix_quad_done = false;
-    actualiser_affichage_txt();
-    start();
-}
-
-void MainWindow::iniquad()
+void MainWindow::iniquad() //PHASE D INITIALISATION DES 4 QUADRIMONS
 {
     if (phaseIni==1){
         quadrimon q11 = quadrimon(Get_Carte_trouvee());
@@ -312,6 +286,8 @@ void MainWindow::attaque()
     actualiser_affichage_txt();
 }
 
+// --------------------------FERMETURE DE FENETRE---------------------------------
+
 void MainWindow::reco_close()
 {
     if (phaseIni<=4){ //PREMIER BLOCK pour la partie ou on scanne nos 2 quadrimons
@@ -335,6 +311,8 @@ void MainWindow::reco_terrain_close()
 
 }
 
+// ------------------------------SWITCH-----------------------------------
+
 void MainWindow::switch_quadri_actif(){
     if (etatJeu==1){
         J1->switchIndexQuadActif1();
@@ -352,6 +330,8 @@ void MainWindow::switch_tour_joueur()
         etatJeu=1;
     }
 }
+
+// ----------------------------AFFICHAGE --------------------------
 
 void MainWindow::set_inst_txt(std::string txt_temp)
 {
@@ -437,6 +417,40 @@ void MainWindow::actualiser_affichage_txt()
     txt_temp=QString::fromStdString("Terrain actif : "+string_temp);
     ui->J2_terrain_label->setText(txt_temp);
 }
+
+
+
+// ------------------------------GETTER ET SETTER -------------------------------
+
+int MainWindow::getEtatJeu() const
+{
+    return etatJeu;
+}
+
+void MainWindow::setEtatJeu(int newEtatJeu)
+{
+    etatJeu = newEtatJeu;
+}
+
+void MainWindow::Set_Carte_trouvee(std::string Ct){
+    Carte_trouvee = Ct;
+}
+
+std::string MainWindow::Get_Carte_trouvee(){
+    return Carte_trouvee;
+}
+
+void MainWindow::Set_Terrain_trouvee(std::string Tt)
+{
+    Terrain_trouvee = Tt;
+}
+
+std::string MainWindow::Get_Terrain_trouvee()
+{
+    return Terrain_trouvee;
+}
+
+// -----------------------------INTERRUPTIONS --------------------------------
 
 void MainWindow::on_interrup_J1_button_clicked()
 {

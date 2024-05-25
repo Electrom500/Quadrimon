@@ -134,3 +134,13 @@ bool terrain::getTerrain_enable()
 {
     return terrain_enable;
 }
+
+bool terrain::getEffet_unique_done() const
+{
+    return effet_unique_done;
+}
+
+void terrain::setEffet_unique_done(bool newEffet_unique_done)
+{
+    effet_unique_done = newEffet_unique_done;
+}
