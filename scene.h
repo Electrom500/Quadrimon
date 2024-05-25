@@ -20,8 +20,8 @@ public:
     void changeQuadJ2(std::string nom);
     void changeTerrJ2(std::string nom);
 
-    void attaqueQuadJ1();
-    void attaqueQuadJ2();
+    quadrimon_affiche* getQuadD();
+    quadrimon_affiche* getQuadG();
 
 protected:
 

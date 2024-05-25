@@ -13,6 +13,7 @@ int Reco_carte::detectCard(std::string path)
 {
     if (!captureMat.empty()){
     Mat img1 = imread(path, IMREAD_GRAYSCALE);
+    std::cout<<path;
     Mat img2 = captureMat;
     if ( img1.empty() )
     {
@@ -95,9 +96,11 @@ void Reco_carte::setLast_carte_detect(const std::string &newLast_carte_detect)
 }
 
 void Reco_carte::actualiser_card_match_label(std::string carte_detect){
-    std::string path ="../../cartes/codes/";
-    if (carte_detect == "Cylindrus"){ path += "cylindrus.png";}
-    else if (carte_detect == "Gizeh"){ path += "gizeh.png";}
+    std::string path ="../cartes/codes/";
+
+    if (carte_detect == "Gizeh"){ path += "gizeh.png";}
+
+
     else if (carte_detect == "Flamby"){ path += "flamby.png";}
     else if (carte_detect == "Khone"){ path += "khone.png";}
     else if (carte_detect == "Menu"){ path += "menu.png";}
@@ -105,7 +108,7 @@ void Reco_carte::actualiser_card_match_label(std::string carte_detect){
     else if (carte_detect == "Saladier"){ path += "saladier.png";}
     else if (carte_detect == "Soleil"){ path += "soleil.png";}
     else if (carte_detect == "Glace"){ path += "glace.png";}
-
+    //else if (carte_detect == "Cylindrus"){ path += "cylindrus.png";}
     if (path != ""){
         QString Qpath=QString::fromStdString(path);
         charger_image(Qpath);
@@ -120,7 +123,7 @@ void Reco_carte::testCartes(){
 
     int nb_max = 0;
     bool stop = false;
-    std::string path ="../../cartes/codes/";
+    std::string path ="../cartes/codes/";
 
     std::string path_cyl = path + "cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;

@@ -7,7 +7,7 @@
 #include <QFrame>
 #include <random>
 #include <iostream>
-
+#include <QDir>
 
 // -------------------- BASICS--------------------------------
 MainWindow::MainWindow(QWidget *parent)
@@ -15,6 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 
+
+
+    QDir dir("./");
+    std::string a = dir.absolutePath().toStdString();
+    std::cout<<a;
     ui->setupUi(this);
     start();
 }
@@ -269,6 +274,7 @@ void MainWindow::iniquad() //PHASE D INITIALISATION DES 4 QUADRIMONS
 void MainWindow::attaque()
 {
     if (etatJeu==1){
+        ui->openGLWidget->getQuadD()->attaque();
         if(J2->est_attaque(J1->degats_a_infliger(),J1->get_type_attaque())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
             set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
@@ -276,6 +282,7 @@ void MainWindow::attaque()
             J1_gagne = true;
         }
     } else {
+        ui->openGLWidget->getQuadD()->attaque();
         if(J1->est_attaque(J2->degats_a_infliger(),J2->get_type_attaque())){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE
             etatJeu=3;
             set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
@@ -357,7 +364,7 @@ void MainWindow::actualiser_affichage_txt()
 
         ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
         if(J1->getTerrainInitialized()){
-            //ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
+            ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
         }
 
         // Affichage des quad de j2
@@ -368,7 +375,7 @@ void MainWindow::actualiser_affichage_txt()
 
         ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
         if(J2->getTerrainInitialized()){
-            //ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+            ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
         }
 
          //IDENTIFICATION DU QUADRIMON ACTIF DE J1

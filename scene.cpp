@@ -42,11 +42,11 @@ void scene::initializeGL()
     // Activation du zbuffer
     glEnable(GL_DEPTH_TEST);
 
-    quadD=new quadrimon_affiche("Cylindrus",1);
-    quadG=new quadrimon_affiche("Olaf",2);
+    quadD=new quadrimon_affiche("",1);
+    quadG=new quadrimon_affiche("",2);
 
-    terrD=new terrain_affiche("volcan",1);
-    terrG=new terrain_affiche("infirmerie",2);
+    terrD=new terrain_affiche("",1);
+    terrG=new terrain_affiche("",2);
 
 }
 
@@ -124,10 +124,9 @@ void scene::changeTerrJ2(std::string nom){
     glDisable(GL_LIGHTING);
 }
 
-void scene::attaqueQuadJ1(){
-    quadD->attaque();
+quadrimon_affiche* scene::getQuadD(){
+    return quadD;
 }
-
-void scene::attaqueQuadJ2(){
-    quadG->attaque();
+quadrimon_affiche* scene::getQuadG(){
+    return quadG;
 }
