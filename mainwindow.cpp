@@ -36,33 +36,41 @@ void MainWindow::on_capture_button_clicked()
     } else { // TOURS CLASSIQUES
 
         // PARTIE UTILISATION DES TERRAINS
-        if (J1->getTerrainActif()->getTerrain_enable()){ //VERIFIE SI LE TERRAIN EST ACTIF
-            if (J1->getTerrainActif()->getEffet_spe()){
-                if(J1->est_attaque(J1->getTerrainActif()->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
-                    etatJeu=3;
-                    set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
-                    set_capt_butt_txt(" Restart ");
-                    J1_gagne = false;
-                }
-            } else { // TODO
-                if(J1->getTerrainActif()->getName()=="grotte"){
-                    choix_quad_done = true;
-                } else if (J1->getTerrainActif()->getName()=="toile"){
+        if(etatJeu==1){
+            if(J1->getTerrainInitialized()){
+                if (J1->getTerrainActif()->getTerrain_enable()){ //VERIFIE SI LE TERRAIN EST ACTIF
+                    if (J1->getTerrainActif()->getEffet_spe()){
+                        if(J1->est_attaque(J1->getTerrainActif()->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                            etatJeu=3;
+                            set_inst_txt("J1 a gagné ! \n cliquez sur le bouton du bas pour relancer une partie");
+                            set_capt_butt_txt(" Restart ");
+                            J1_gagne = false;
+                        }
+                    } else { // TODO
+                        if(J1->getTerrainActif()->getName()=="grotte"){
+                            choix_quad_done = true;
+                        } else if (J1->getTerrainActif()->getName()=="toile"){
 
-                }else if (J1->getTerrainActif()->getName()=="chat"){
+                        }else if (J1->getTerrainActif()->getName()=="chat"){
 
-                }else if (J1->getTerrainActif()->getName()=="volcan"){
+                        }else if (J1->getTerrainActif()->getName()=="volcan"){
 
-                }else if (J1->getTerrainActif()->getName()=="foret"){
+                        }else if (J1->getTerrainActif()->getName()=="foret"){
 
-                }else{ // Plage
+                        }else{ // Plage
 
+                        }
+                    }
+                    J1->getTerrainActif()->reduc_tour();
+
+                    actualiser_affichage_txt();
                 }
             }
-            J1->getTerrainActif()->reduc_tour();
-
-            actualiser_affichage_txt();
+        } else {
+            //CODE IDEM MAIS POUR J2
+            std::cout<<"OUBLIE PAS CA";
         }
+
 
 
         if (!choix_quad_done){ // PARTIE CHANGEMENT DE QUAD ACTIF
@@ -91,12 +99,12 @@ void MainWindow::on_capture_button_clicked()
                     if (q_switch_ko != J1->getIndexQuadActif1()){
                         J1->switchIndexQuadActif1();
                     }
-                    ui->openGLWidget->attaqueQuadJ1();
+                    //ui->openGLWidget->attaqueQuadJ1();
                 } else {
                     if (q_switch_ko != J2->getIndexQuadActif1()){
                         J2->switchIndexQuadActif1();
                     }
-                    ui->openGLWidget->attaqueQuadJ2();
+                    //ui->openGLWidget->attaqueQuadJ2();
                 }
 
                 actualiser_affichage_txt();
@@ -366,35 +374,41 @@ void MainWindow::actualiser_affichage_txt()
         ui->J1_quad1_label->setText(txt_temp);
         txt_temp=QString::fromStdString(J1->get_q2_txt());
         ui->J1_quad2_label->setText(txt_temp);
+
         ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
-        ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
-        ui->openGLWidget->attaqueQuadJ1();
+        if(J1->getTerrainInitialized()){
+            //ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
+        }
 
         // Affichage des quad de j2
         txt_temp=QString::fromStdString(J2->get_q1_txt());
         ui->J2_quad1_label->setText(txt_temp);
         txt_temp=QString::fromStdString(J2->get_q2_txt());
         ui->J2_quad2_label->setText(txt_temp);
+
         ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
-        ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
-    }
+        if(J2->getTerrainInitialized()){
+            //ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+        }
 
-    if(J1->getIndexQuadActif1()){ //IDENTIFICATION DU QUADRIMON ACTIF DE J1
-        ui->J1_quad1_label->setFrameShape(QFrame::Box);
-        ui->J1_quad2_label->setFrameShape(QFrame::NoFrame);
-    } else {
-        ui->J1_quad2_label->setFrameShape(QFrame::Box);
-        ui->J1_quad1_label->setFrameShape(QFrame::NoFrame);
-    }
+         //IDENTIFICATION DU QUADRIMON ACTIF DE J1
+        if(J1->getIndexQuadActif1()){
+            ui->J1_quad1_label->setFrameShape(QFrame::Box);
+            ui->J1_quad2_label->setFrameShape(QFrame::NoFrame);
+        } else {
+            ui->J1_quad2_label->setFrameShape(QFrame::Box);
+            ui->J1_quad1_label->setFrameShape(QFrame::NoFrame);
+        }
 
-    if(J2->getIndexQuadActif1()){ //IDENTIFICATION DU QUADRIMON ACTIF DE J2
-        ui->J2_quad1_label->setFrameShape(QFrame::Box);
-        ui->J2_quad2_label->setFrameShape(QFrame::NoFrame);
-    } else {
-        ui->J2_quad2_label->setFrameShape(QFrame::Box);
-        ui->J2_quad1_label->setFrameShape(QFrame::NoFrame);
+        //IDENTIFICATION DU QUADRIMON ACTIF DE J2
+        if(J2->getIndexQuadActif1()){
+            ui->J2_quad1_label->setFrameShape(QFrame::Box);
+            ui->J2_quad2_label->setFrameShape(QFrame::NoFrame);
+        } else {
+            ui->J2_quad2_label->setFrameShape(QFrame::Box);
+            ui->J2_quad1_label->setFrameShape(QFrame::NoFrame);
+        }
     }
-
 
     //LABEL DU TERRAIN ACTIF DE J1
     std::string string_temp = "";
@@ -422,7 +436,6 @@ void MainWindow::actualiser_affichage_txt()
     }
     txt_temp=QString::fromStdString("Terrain actif : "+string_temp);
     ui->J2_terrain_label->setText(txt_temp);
-
 }
 
 void MainWindow::on_interrup_J1_button_clicked()
