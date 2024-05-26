@@ -24,6 +24,7 @@ public:
     virtual ~quadrimon_affiche();
     void Display(const float time);
     void attaque();
+    void changeQuad(std::string quad);
 
     void setTime(float time){m_time=time;}
 };

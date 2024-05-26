@@ -174,7 +174,7 @@ void Reco_terrain::testCartes(){
 
     if(!stop){
         std::string path_menu = path + "ouragan.png";
-        corr = 0.;
+        corr = 0.4;
         nb = detectCard(path_menu)*corr;
         std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
@@ -198,7 +198,7 @@ void Reco_terrain::testCartes(){
 
     if(!stop){
         std::string path_sala = path + "toile.png";
-        corr = 0.1;
+        corr = 0.3;
         nb = detectCard(path_sala)*corr;
         std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){

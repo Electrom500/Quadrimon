@@ -54,7 +54,7 @@ terrain::terrain(std::string _name)
     case 6: // ouragan
         nb_tours=3;
         effet_spe=true;
-        value = 100;
+        value = -100;
         break;
 
     case 7: // plage

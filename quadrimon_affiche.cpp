@@ -34,10 +34,10 @@ void quadrimon_affiche::Display(const float time)
     glEnable(GL_LIGHTING);
     glPushMatrix();
     if (m_joueur==1){
-        glTranslated(-30.0f,0,0);
+        glTranslated(30.0f,0,0);
     }
     else{
-        glTranslated(30.0f,0,0);
+        glTranslated(-30.0f,0,0);
     }
 
     if(t_att!=-1){
@@ -92,8 +92,8 @@ void quadrimon_affiche::Display(const float time)
     else if(m_quad=="Gizeh"){
         // Couleur de l'objet
         //glColor3f(1.0f,0.0f,0.0f);
+        glTranslated(0.0,10.0,0.0);
         glRotated(90.,1.,0.,0.);
-        glTranslated(0.0,-40.0,0.0);
         GLfloat colorAmbianteTab1[] = {1.0,1.0,0.0,0.0};
         GLfloat colorDiffuseTab1[] = {1.0,1.0,1.0,1.0};
         glMaterialfv(GL_FRONT,GL_DIFFUSE,colorDiffuseTab1);
@@ -238,8 +238,8 @@ void quadrimon_affiche::Display(const float time)
     }
 
     else if(m_quad == "Cylindrus"){
+        glTranslated(0.0,10.0,0.0);
         glRotated(90,1.0,0.0,0.0);
-        glTranslated(0,-30,0);
         GLfloat colorAmbianteTab1[] = {0.0,0.0,1.0,0.0};
         GLfloat colorDiffuseTab1[] = {1.0,1.0,1.0,1.0};
         glMaterialfv(GL_FRONT,GL_DIFFUSE,colorDiffuseTab1);
@@ -289,3 +289,6 @@ void quadrimon_affiche::Display(const float time)
 }
 
 
+void quadrimon_affiche::changeQuad(std::string quad){
+    m_quad = quad;
+}

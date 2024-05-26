@@ -31,6 +31,10 @@ scene::scene(QWidget *parent)
 }
 
 scene::~scene(){
+    delete quadD;
+    delete quadG;
+    delete terrD;
+    delete terrG;
 }
 
 // Fonction d'initialisation
@@ -99,7 +103,7 @@ void scene::paintGL()
 void scene::changeQuadJ1(std::string nom){
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    quadG=new quadrimon_affiche(nom,1);
+    quadG->changeQuad(nom);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
@@ -107,20 +111,21 @@ void scene::changeQuadJ1(std::string nom){
 void scene::changeQuadJ2(std::string nom){
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    quadD=new quadrimon_affiche(nom,2);
+    quadD->changeQuad(nom);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
 
 void scene::changeTerrJ1(std::string nom){
     glDisable(GL_LIGHTING);
-    terrG=new terrain_affiche(nom,2);
+    terrG->changeTerr(nom);
     glDisable(GL_LIGHTING);
 }
 
 void scene::changeTerrJ2(std::string nom){
     glDisable(GL_LIGHTING);
-    terrD=new terrain_affiche(nom,1);
+
+    terrD->changeTerr(nom);
     glDisable(GL_LIGHTING);
 }
 

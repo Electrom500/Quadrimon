@@ -53,13 +53,28 @@ int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joue
             std::string nom_terrain = terrainActif->getName();
             if(nom_terrain=="chat" && autre_terrain_existe){
                 nom_terrain = terrain_autre_joueur->getName();
+
+                // PARTIE OU ON VERIFIE MANUELLEMENT CAR IL FAUDRAIT CHANGER DES VARIABLES DE TERRAINS
+                if(nom_terrain=="infirmerie"){
+                    if(est_attaque(-1000,10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                        return 1;
+                    }
+                } else if (nom_terrain=="ouragan"){
+                    if(est_attaque(-100,10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                        return 1;
+                    }
+                } else if (nom_terrain=="marais"){
+                    if(est_attaque(50,10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
+                        return 1;
+                    }
+                }
             }
 
             if (terrainActif->getEffet_spe()){
                 if(est_attaque(terrainActif->getValue(),10)){ // ATTAQUE ET VERIFIE LA FIN DE PARTIE + type a 10 pour être sur de ne pas activer d'avantage de type
                     return 1;
                 }
-            } else { // TODO
+            } else {
                 if(nom_terrain=="grotte"){
                     return 2;
                 } else if (nom_terrain=="toile"){
@@ -125,6 +140,7 @@ int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joue
 bool joueur::est_attaque(int degats, int type) // Renvoie true si plus de quadrimon vivant, false sinon
 {
     double k =attaque_boostee(type);
+    std::cout<<k<<std::endl;
     if (indexQuadActif1) {
         q1->setPv(q1->getPv()-k*degats);
         if (q1->getPv()<=0) {
@@ -175,6 +191,7 @@ bool joueur::getQ2_ko() const
 
 double joueur::attaque_boostee(int type_attaque) //RENVOIE LE COEFF D AVANTAGE SUR LE TYPE DU QUAD ACTIF
 {
+    //std::cout<<type_attaque<<double_boost<<std::endl;
     if(type_attaque==3){ //CAS SPECIAL CAR NE REPOND PAS A LA REGLE DU +1 : type1 > type2 > type3 > type1
         if(indexQuadActif1){
             if(q1->getType()==1){
