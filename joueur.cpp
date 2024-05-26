@@ -124,15 +124,7 @@ int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joue
 
 bool joueur::est_attaque(int degats, int type) // Renvoie true si plus de quadrimon vivant, false sinon
 {
-    double k =1;
-    if (attaque_boostee(type)){
-        if(double_boost){
-            k=2.5;
-        } else {
-            k=2;
-        }
-    }
-
+    double k =attaque_boostee(type);
     if (indexQuadActif1) {
         q1->setPv(q1->getPv()-k*degats);
         if (q1->getPv()<=0) {
@@ -145,6 +137,7 @@ bool joueur::est_attaque(int degats, int type) // Renvoie true si plus de quadri
         if (q2->getPv()<=0){
             q2_ko=true;
             if (q1_ko) return true;
+            switchIndexQuadActif1();
         }
     }
     return false;
@@ -157,20 +150,16 @@ int joueur::degats_a_infliger()
 }
 
 int joueur::get_type_attaque(){
-    if (indexQuadActif1){
-        return q1->getType();
-    }
+    if (indexQuadActif1) return q1->getType();
     return q2->getType();
 }
 std::string joueur::get_q1_txt()
 {
-    //return std::__cxx11::to_string(reinterpret_cast<std::uintptr_t>(q1));
     return q1->toString();
 }
 
 std::string joueur::get_q2_txt()
 {
-    //return std::__cxx11::to_string(reinterpret_cast<std::uintptr_t>(q2));
     return q2->toString();
 }
 

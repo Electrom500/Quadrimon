@@ -95,7 +95,7 @@ void Reco_terrain::setLast_carte_detect(const std::string &newLast_carte_detect)
 }
 
 void Reco_terrain::actualiser_card_match_label(std::string carte_detect){
-    std::string path ="../cartes/codes/";
+    std::string path ="../../cartes/codes/";
     path+=carte_detect+".png";
 
     if (path != ""){
@@ -111,8 +111,8 @@ void Reco_terrain::testCartes(){
     int nb_max = 0;
     bool stop = false;
     float corr;
-    std::string path ="../cartes/codes/";
 
+    std::string path ="../../cartes/codes/";
     std::string path_cyl = path + "chat.png";
     corr = 0.7;
     int nb = detectCard(path_cyl)*corr;

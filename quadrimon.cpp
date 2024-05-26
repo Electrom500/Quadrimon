@@ -143,11 +143,11 @@ std::string quadrimon::toString()
     }
     std::string strType = "";
     if (type==1){
-        strType = "Eau";
-    } else if (type==2){
         strType = "Feu";
-    } else if (type==3){
+    } else if (type==2){
         strType = "Vent";
+    } else if (type==3){
+        strType = "Eau";
     }
     std::string str = " Nom = " + name +
                  "\n Type = " + strType +

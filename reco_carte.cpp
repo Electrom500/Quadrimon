@@ -8,7 +8,6 @@
 #include "opencv2/features2d.hpp"
 
 using namespace cv;
-
 int Reco_carte::detectCard(std::string path)
 {
     if (!captureMat.empty()){
@@ -96,8 +95,7 @@ void Reco_carte::setLast_carte_detect(const std::string &newLast_carte_detect)
 }
 
 void Reco_carte::actualiser_card_match_label(std::string carte_detect){
-    std::string path ="../cartes/codes/";
-
+    std::string path ="../../cartes/codes/";
     if (carte_detect == "Gizeh"){ path += "gizeh.png";}
 
 
@@ -108,7 +106,7 @@ void Reco_carte::actualiser_card_match_label(std::string carte_detect){
     else if (carte_detect == "Saladier"){ path += "saladier.png";}
     else if (carte_detect == "Soleil"){ path += "soleil.png";}
     else if (carte_detect == "Glace"){ path += "glace.png";}
-    //else if (carte_detect == "Cylindrus"){ path += "cylindrus.png";}
+    else if (carte_detect == "Cylindrus"){ path += "cylindrus.png";}
     if (path != ""){
         QString Qpath=QString::fromStdString(path);
         charger_image(Qpath);
@@ -123,8 +121,8 @@ void Reco_carte::testCartes(){
 
     int nb_max = 0;
     bool stop = false;
-    std::string path ="../cartes/codes/";
 
+    std::string path ="../../cartes/codes/";
     std::string path_cyl = path + "cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;
     std::cout<<nb<<std::endl;
@@ -157,7 +155,7 @@ void Reco_carte::testCartes(){
 
     if(!stop){
     std::string path_glace = path + "glace.png";
-    nb = detectCard(path_glace)/2.3;
+    nb = detectCard(path_glace)/1.5;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
@@ -177,7 +175,7 @@ void Reco_carte::testCartes(){
 
     if(!stop){
     std::string path_menu = path + "menu.png";
-    nb = detectCard(path_menu)/13;
+    nb = detectCard(path_menu)/20;
     std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
@@ -207,7 +205,7 @@ void Reco_carte::testCartes(){
 
     if(!stop){
         std::string path_soleil = path + "soleil.png";
-        nb = detectCard(path_soleil)/3;
+        nb = detectCard(path_soleil)/2.5;
         std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
@@ -244,7 +242,6 @@ Reco_carte::Reco_carte(MainWindow *mw_,QWidget *parent)
     , ui(new Ui::Reco_carte)
 {
     ui->setupUi(this);
-    //connect(this, &Reco_carte::destroyed, this, &Reco_carte::deleteLater);
     capture = VideoCapture(0);
 
     QTimer *timer = new QTimer(this);

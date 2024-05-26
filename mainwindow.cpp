@@ -67,7 +67,6 @@ void MainWindow::on_capture_button_clicked()
         restart();
     }else if (phaseIni<=4){ // PARTIE INITIALISATION DES QUADRIMONS
         Reco_carte *r = new Reco_carte(this);
-        // Reco_terrain *r = new Reco_terrain(this); // POUR TESTER LA RECONNAISSANCE DES TERRRAINS
         r->exec();
     } else { // TOURS CLASSIQUES
 
@@ -136,12 +135,10 @@ void MainWindow::on_capture_button_clicked()
                     if (q_switch_ko != J1->getIndexQuadActif1()){
                         J1->switchIndexQuadActif1();
                     }
-                    //ui->openGLWidget->attaqueQuadJ1();
                 } else {
                     if (q_switch_ko != J2->getIndexQuadActif1()){
                         J2->switchIndexQuadActif1();
                     }
-                    //ui->openGLWidget->attaqueQuadJ2();
                 }
 
                 actualiser_affichage_txt();

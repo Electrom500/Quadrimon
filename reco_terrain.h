@@ -31,6 +31,7 @@ public:
     Ui::Reco_terrain *ui;
 
 private:
+
     MainWindow *mw;
     void actualiser_card_match_label(std::string path);
     void charger_image(QString cheminImage);
