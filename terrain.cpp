@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-std::vector<std::string> allTerrain = {"chat", "foret", "grotte", "infirmerie","marais","ouragan","plage","toile","volcan","None"};
+std::vector<std::string> allTerrain = {"chat", "foret", "grotte", "infirmerie","marais","ouragan","plage","toiles","volcan","None"};
 
 int trouverIndiceTerrain(const std::vector<std::string>& liste, const std::string& recherche) {
     auto it = std::find(liste.begin(), liste.end(), recherche);
@@ -62,7 +62,7 @@ terrain::terrain(std::string _name)
         effet_spe=false;
         break;
 
-    case 8: // toile
+    case 8: // toiles
         nb_tours=3;
         effet_spe=false;
         break;

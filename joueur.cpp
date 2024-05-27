@@ -77,7 +77,7 @@ int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joue
             } else {
                 if(nom_terrain=="grotte"){
                     return 2;
-                } else if (nom_terrain=="toile"){
+                } else if (nom_terrain=="toiles"){
                     if(!terrainActif->getEffet_unique_done()){
 
                         if(q1->getAttaque()>100){

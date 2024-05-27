@@ -197,13 +197,13 @@ void Reco_terrain::testCartes(){
     }
 
     if(!stop){
-        std::string path_sala = path + "toile.png";
+        std::string path_sala = path + "toiles.png";
         corr = 0.3;
         nb = detectCard(path_sala)*corr;
         std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
-            carte_detect = "toile";
+            carte_detect = "toiles";
             nb_max = nb;
         }
     }

@@ -50,12 +50,17 @@ void MainWindow::restart()
 {
     delete J1;
     delete J2;
+
     J1 = new joueur;
     J2 = new joueur;
+    actualiser_affichage_txt();
+    ui->openGLWidget->changeTerrJ1("");
+    ui->openGLWidget->changeTerrJ2("");
     etatJeu = 0;
     phaseIni = 1;
     choix_quad_done = false;
-    actualiser_affichage_txt();
+
+
     start();
 }
 
@@ -156,11 +161,25 @@ void MainWindow::on_capture_button_clicked()
                     set_inst_txt(" Joueur "+std::__cxx11::to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
                     set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
                 }
+                if(J1->getTerrainInitialized()){
+                    if(J1->getTerrainActif()->getName()== "grotte" && J1->getTerrainActif()->getTerrain_enable()){
+                        set_inst_txt(" Joueur "+std::__cxx11::to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
+                        set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
+                        J1->getTerrainActif()->reduc_tour();
+                    }
+                }
             } else if (etatJeu==2) {
                 if (J2->getQ1_ko() || J2->getQ2_ko()){
                     choix_quad_done = true;
                     set_inst_txt(" Joueur "+std::__cxx11::to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
                     set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
+                }
+                if(J2->getTerrainInitialized()){
+                    if(J2->getTerrainActif()->getName()== "grotte" && J2->getTerrainActif()->getTerrain_enable()){
+                        set_inst_txt(" Joueur "+std::__cxx11::to_string(getEtatJeu())+ " c'est ton tour \n Veux tu attaquer avec ton quadrimon selectionné ?");
+                        set_capt_butt_txt("Joueur "+std::__cxx11::to_string(getEtatJeu())+", à l'attaque ?");
+                        J1->getTerrainActif()->reduc_tour();
+                    }
                 }
             }
             if (premiere_attaque){
@@ -305,6 +324,7 @@ void MainWindow::reco_terrain_close()
     if (t->getTerrain_valid()){
         if (terrain_a_changer_J1){
             J1->setTerrainActif(t);
+            //J1->
         }else{
             J2->setTerrainActif(t);
         }
@@ -352,16 +372,21 @@ void MainWindow::set_capt_butt_txt(std::string txt_temp)
 void MainWindow::actualiser_affichage_txt()
 {
     QString txt_temp;
-    if (phaseIni>3){
+    if (phaseIni>3)  {
         // Affichage des quad de j1
         txt_temp=QString::fromStdString(J1->get_q1_txt());
         ui->J1_quad1_label->setText(txt_temp);
         txt_temp=QString::fromStdString(J1->get_q2_txt());
         ui->J1_quad2_label->setText(txt_temp);
 
+        // Affichage du terrain de j1
         ui->openGLWidget->changeQuadJ1(J1->getNameQuadActif());
         if(J1->getTerrainInitialized()){
-            ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
+            if(J1->getTerrainActif()->getTerrain_enable()){ //Pour ne pas afficher les terrains qui ont expiré
+                ui->openGLWidget->changeTerrJ1(J1->getTerrainActif()->getName());
+            } else {
+                ui->openGLWidget->changeTerrJ1("");
+            }
         }
 
         // Affichage des quad de j2
@@ -370,9 +395,14 @@ void MainWindow::actualiser_affichage_txt()
         txt_temp=QString::fromStdString(J2->get_q2_txt());
         ui->J2_quad2_label->setText(txt_temp);
 
+        // Affichage du terrain de j2
         ui->openGLWidget->changeQuadJ2(J2->getNameQuadActif());
         if(J2->getTerrainInitialized()){
-            ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+            if(J2->getTerrainActif()->getTerrain_enable()){
+                ui->openGLWidget->changeTerrJ2(J2->getTerrainActif()->getName());
+            } else {
+                ui->openGLWidget->changeTerrJ2("");
+            }
         }
 
          //IDENTIFICATION DU QUADRIMON ACTIF DE J1
@@ -399,6 +429,11 @@ void MainWindow::actualiser_affichage_txt()
     if(J1->getTerrainInitialized()){
         if(J1->getTerrainActif()->getTerrain_enable()){
             string_temp = J1->getTerrainActif()->getName();
+            if(J1->getTerrainActif()->getNb_tours()==-1){
+                string_temp += "\n Terrain permanent";
+            }else{
+                string_temp += "\n Nombre de tours restant : " + std::to_string(J1->getTerrainActif()->getNb_tours());
+            }
         } else {
             string_temp = " Aucun !";
         }
@@ -412,6 +447,11 @@ void MainWindow::actualiser_affichage_txt()
     if(J2->getTerrainInitialized()){
         if(J2->getTerrainActif()->getTerrain_enable()){
             string_temp = J2->getTerrainActif()->getName();
+            if(J2->getTerrainActif()->getNb_tours()==-1){
+                string_temp += "\n Terrain permanent";
+            }else{
+                string_temp += "\n Nombre de tours restant : " + std::to_string(J2->getTerrainActif()->getNb_tours());
+            }
         } else {
             string_temp = " Aucun !";
         }
