@@ -42,7 +42,6 @@ int Reco_terrain::detectCard(std::string path)
                 good_matches.push_back(knn_matches[i][0]);
             }
         }
-        //cout<<"Il y a : "<< good_matches.size()<< "good matches "<<std::endl;
         return good_matches.size();
     }
     return 0;
@@ -116,7 +115,6 @@ void Reco_terrain::testCartes(){
     std::string path_cyl = path + "chat.png";
     corr = 0.7;
     int nb = detectCard(path_cyl)*corr;
-    std::cout<<nb<<std::endl;
     std::string carte_detect = "None";
     if (nb > 20) {
         if(nb>50){stop=true;}
@@ -128,7 +126,6 @@ void Reco_terrain::testCartes(){
         std::string path_gizeh = path + "foret.png";
         corr = 0.4;
         nb = detectCard(path_gizeh)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "foret";
@@ -140,7 +137,6 @@ void Reco_terrain::testCartes(){
         std::string path_flamby = path + "grotte.png";
         corr = 0.3;
         nb = detectCard(path_flamby)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "grotte";
@@ -152,7 +148,6 @@ void Reco_terrain::testCartes(){
         std::string path_glace = path + "infirmerie.png";
         corr = 0.3;
         nb = detectCard(path_glace)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "infirmerie";
@@ -164,7 +159,6 @@ void Reco_terrain::testCartes(){
         std::string path_khone = path + "marais.png";
         corr = 0.4;
         nb = detectCard(path_khone)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "marais";
@@ -176,7 +170,6 @@ void Reco_terrain::testCartes(){
         std::string path_menu = path + "ouragan.png";
         corr = 0.4;
         nb = detectCard(path_menu)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "ouragan";
@@ -188,7 +181,6 @@ void Reco_terrain::testCartes(){
         std::string path_olaf = path + "plage.png";
         corr = 0.5;
         nb = detectCard(path_olaf)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "plage";
@@ -198,9 +190,8 @@ void Reco_terrain::testCartes(){
 
     if(!stop){
         std::string path_sala = path + "toiles.png";
-        corr = 0.3;
+        corr = 0.5;
         nb = detectCard(path_sala)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "toiles";
@@ -212,7 +203,6 @@ void Reco_terrain::testCartes(){
         std::string path_soleil = path + "volcan.png";
         corr = 0.2;
         nb = detectCard(path_soleil)*corr;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "volcan";
@@ -224,7 +214,6 @@ void Reco_terrain::testCartes(){
     ui->nom_carte_label->setText(card_match_txt);
     actualiser_card_match_label(carte_detect);
     setLast_carte_detect(carte_detect);
-    std::cout<<carte_detect<<std::endl;
 }
 
 void Reco_terrain::updateImage()

@@ -140,7 +140,6 @@ int joueur::effet_terrain(bool autre_terrain_existe, terrain* terrain_autre_joue
 bool joueur::est_attaque(int degats, int type) // Renvoie true si plus de quadrimon vivant, false sinon
 {
     double k =attaque_boostee(type);
-    std::cout<<k<<std::endl;
     if (indexQuadActif1) {
         q1->setPv(q1->getPv()-k*degats);
         if (q1->getPv()<=0) {
@@ -191,7 +190,6 @@ bool joueur::getQ2_ko() const
 
 double joueur::attaque_boostee(int type_attaque) //RENVOIE LE COEFF D AVANTAGE SUR LE TYPE DU QUAD ACTIF
 {
-    //std::cout<<type_attaque<<double_boost<<std::endl;
     if(type_attaque==3){ //CAS SPECIAL CAR NE REPOND PAS A LA REGLE DU +1 : type1 > type2 > type3 > type1
         if(indexQuadActif1){
             if(q1->getType()==1){

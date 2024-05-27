@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QDir dir("./");
     std::string a = dir.absolutePath().toStdString();
-    std::cout<<a;
+    std::cout<<a; // AIDE POUR LA LOCALISATION ET LE CHEMIN RELATIF DES IMAGES cf path dans reco_terrain et reco_carte
     ui->setupUi(this);
     start();
 }
@@ -329,8 +329,6 @@ void MainWindow::reco_terrain_close()
             J2->setTerrainActif(t);
         }
         actualiser_affichage_txt();
-    } else {
-        std::cout<< " TERRAIN INVALIDE ?"<<std::endl;
     }
 
 }

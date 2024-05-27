@@ -42,7 +42,6 @@ int Reco_carte::detectCard(std::string path)
             good_matches.push_back(knn_matches[i][0]);
         }
     }
-    //cout<<"Il y a : "<< good_matches.size()<< "good matches "<<std::endl;
     return good_matches.size();
     }
     return 0;
@@ -125,7 +124,6 @@ void Reco_carte::testCartes(){
     std::string path ="../../cartes/codes/";
     std::string path_cyl = path + "cylindrus.png";
     int nb = detectCard(path_cyl)/1.5;
-    std::cout<<nb<<std::endl;
     std::string carte_detect = "None";
     if (nb > 20) {
         if(nb>50){stop=true;}
@@ -136,7 +134,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_gizeh = path + "gizeh.png";
     nb = detectCard(path_gizeh);
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Gizeh";
@@ -146,7 +143,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_flamby = path + "flamby.png";
     nb = detectCard(path_flamby)*3;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Flamby";
@@ -156,7 +152,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_glace = path + "glace.png";
     nb = detectCard(path_glace)/1.5;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Glace";
@@ -166,7 +161,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_khone = path + "khone.png";
     nb = detectCard(path_khone)/5;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Khone";
@@ -176,7 +170,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_menu = path + "menu.png";
     nb = detectCard(path_menu)/20;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Menu";
@@ -186,7 +179,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_olaf = path + "olaf.png";
     nb = detectCard(path_olaf)/3;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Olaf";
@@ -196,7 +188,6 @@ void Reco_carte::testCartes(){
     if(!stop){
     std::string path_sala = path + "saladier.png";
     nb = detectCard(path_sala)*2;
-    std::cout<<nb<<std::endl;
     if (nb > 20 && nb>nb_max){
         if(nb>50){stop=true;}
         carte_detect = "Saladier";
@@ -206,7 +197,6 @@ void Reco_carte::testCartes(){
     if(!stop){
         std::string path_soleil = path + "soleil.png";
         nb = detectCard(path_soleil)/2.5;
-        std::cout<<nb<<std::endl;
         if (nb > 20 && nb>nb_max){
             if(nb>50){stop=true;}
             carte_detect = "Soleil";
@@ -217,7 +207,6 @@ void Reco_carte::testCartes(){
     ui->nom_carte_label->setText(card_match_txt);
     actualiser_card_match_label(carte_detect);
     setLast_carte_detect(carte_detect);
-    std::cout<<carte_detect<<std::endl;
 }
 
 void Reco_carte::updateImage()
